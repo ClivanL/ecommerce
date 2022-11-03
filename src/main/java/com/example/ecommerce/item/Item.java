@@ -3,7 +3,7 @@ package com.example.ecommerce.item;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name="item", schema="public")
 public class Item {
 
     @Id
