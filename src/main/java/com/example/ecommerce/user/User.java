@@ -1,7 +1,11 @@
 package com.example.ecommerce.user;
 
 
+import com.example.ecommerce.purchaseLog.PurchaseLog;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="user", schema="public")
@@ -23,6 +27,9 @@ public class User {
     private String password;
     private String name;
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private Set<PurchaseLog> purchaseLogs= new HashSet<>();
 
     public User() {
     }
@@ -80,6 +87,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<PurchaseLog> getPurchaseLogs() {
+        return purchaseLogs;
+    }
+
+    public void setPurchaseLogs(Set<PurchaseLog> purchaseLogs) {
+        this.purchaseLogs = purchaseLogs;
     }
 
     @Override
