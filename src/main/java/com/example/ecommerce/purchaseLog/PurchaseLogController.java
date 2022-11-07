@@ -12,7 +12,9 @@ public class PurchaseLogController {
 
     @Autowired
     public PurchaseLogController(PurchaseLogService purchaseLogService){
+
         this.purchaseLogService=purchaseLogService;
+
     }
 
     @GetMapping
@@ -20,8 +22,8 @@ public class PurchaseLogController {
         return purchaseLogService.getPurchaseLog();
     }
     @PostMapping
-    public void addPurchaseLog(@RequestBody PurchaseLog purchaseLog){
-        purchaseLogService.addPurchaseLog(purchaseLog);
+    public void addPurchaseLog(@RequestBody PurchaseLogDTO purchaseLogDTO){
+        purchaseLogService.addPurchaseLog(purchaseLogDTO);
     }
     @DeleteMapping(path="{purchaseLogId}")
     public void deletePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId){

@@ -3,6 +3,7 @@ package com.example.ecommerce.purchaseLog;
 
 import com.example.ecommerce.item.Item;
 import com.example.ecommerce.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -23,10 +24,12 @@ public class PurchaseLog {
     private Long id;
 
     @ManyToOne
+    @JsonIgnoreProperties("purchaseLogs")
     @JoinColumn(name="item_id")
     private Item item;
 
     @ManyToOne
+    @JsonIgnoreProperties("purchaseLogs")
     @JoinColumn(name="user_id")
     private User user;
 

@@ -9,17 +9,20 @@ import java.util.Optional;
 @Service
 public class PurchaseLogService {
     private final PurchaseLogRepository purchaseLogRepository;
+    private final PurchaseLogMapper purchaseLogMapper;
 
     @Autowired
-    public PurchaseLogService(PurchaseLogRepository purchaseLogRepository){
+    public PurchaseLogService(PurchaseLogRepository purchaseLogRepository, PurchaseLogMapper purchaseLogMapper){
         this.purchaseLogRepository=purchaseLogRepository;
+        this.purchaseLogMapper=purchaseLogMapper;
     }
 
     public List<PurchaseLog> getPurchaseLog() {
         return purchaseLogRepository.findAll();
     }
 
-    public void addPurchaseLog(PurchaseLog purchaseLog) {
+    public void addPurchaseLog(PurchaseLogDTO purchaseLogDTO) {
+        PurchaseLog purchaseLog= purchaseLogMapper.toEntity(purchaseLogDTO);
         purchaseLogRepository.save(purchaseLog);
     }
 
