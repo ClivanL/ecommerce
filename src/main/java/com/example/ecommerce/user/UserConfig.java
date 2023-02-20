@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@Configuration
 public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner2(UserRepository userRepository){
