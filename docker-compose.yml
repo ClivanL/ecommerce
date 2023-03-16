@@ -1,0 +1,25 @@
+version: '2'
+services:
+    item-server:
+        container_name: item-server
+        build:
+            context: item
+            dockerfile: Dockerfile
+        image: item-server:latest
+        ports:
+            - 18888:8888
+        networks:
+            - spring-cloud-network
+    users-server:
+        container_name: ecommerce-server
+        build:
+            context: users
+            dockerfile: Dockerfile
+        image: ecommerce-server:latest
+        ports:
+            - 19999:9999
+        networks:
+            - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge
