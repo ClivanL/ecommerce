@@ -25,8 +25,10 @@ public class Item {
     private String imageUrl;
     private int quantity;
     private String category;
+    private Long ownerId;
 
-    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category) {
+
+    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId) {
         this.id = id;
         this.itemName = itemName;
         this.price = price;
@@ -34,15 +36,17 @@ public class Item {
         this.imageUrl = imageUrl;
         this.quantity = quantity;
         this.category = category;
+        this.ownerId=ownerId;
     }
 
-    public Item(String itemName, Double price, String description, String imageUrl, int quantity, String category) {
+    public Item(String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId) {
         this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
         this.category = category;
+        this.ownerId = ownerId;
     }
 
     public Item() {
@@ -104,6 +108,14 @@ public class Item {
         this.category = category;
     }
 
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
     @Override
     public String toString() {
         return "Item{" +
@@ -114,6 +126,7 @@ public class Item {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", quantity=" + quantity +
                 ", category='" + category + '\'' +
+                ", ownerId=" + ownerId +
                 '}';
     }
 }
