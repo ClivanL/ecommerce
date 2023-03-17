@@ -24,22 +24,25 @@ public class Item {
     private String description;
     private String imageUrl;
     private int quantity;
+    private String category;
 
-    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity) {
+    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category) {
         this.id = id;
         this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
+        this.category = category;
     }
 
-    public Item(String itemName, Double price, String description, String imageUrl, int quantity) {
+    public Item(String itemName, Double price, String description, String imageUrl, int quantity, String category) {
         this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
+        this.category = category;
     }
 
     public Item() {
@@ -93,8 +96,16 @@ public class Item {
         this.quantity = quantity;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
         return "Item{" +
                 "id=" + id +
                 ", itemName='" + itemName + '\'' +
@@ -102,6 +113,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", quantity=" + quantity +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

@@ -53,6 +53,8 @@ public class ItemService {
         itemInSystem.setImageUrl(item.getImageUrl());
         itemInSystem.setPrice(item.getPrice());
         itemInSystem.setQuantity(item.getQuantity());
+        itemInSystem.setCategory(item.getCategory());
+
 
     }
 }
