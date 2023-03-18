@@ -7,17 +7,37 @@ services:
             dockerfile: Dockerfile
         image: item-server:latest
         ports:
-            - 18888:8888
+            - 18888:8080
         networks:
             - spring-cloud-network
-    users-server:
-        container_name: ecommerce-server
+    user-server:
+        container_name: user-server
         build:
-            context: users
+            context: user
             dockerfile: Dockerfile
-        image: ecommerce-server:latest
+        image: user-server:latest
         ports:
-            - 19999:9999
+            - 19999:8081
+        networks:
+            - spring-cloud-network
+    purchaseLog-server:
+        container_name: purchaseLog-server
+        build:
+            context: purchaseLog
+            dockerfile: Dockerfile
+        image: purchaselog-server:latest
+        ports:
+            - 17777:8082
+        networks:
+            - spring-cloud-network
+    cart-server:
+        container_name: cart-server
+        build:
+            context: cart
+            dockerfile: Dockerfile
+        image: cart-server:latest
+        ports:
+            - 16666:8083
         networks:
             - spring-cloud-network
 networks:
