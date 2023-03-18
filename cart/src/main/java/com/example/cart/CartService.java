@@ -32,7 +32,13 @@ public class CartService {
 
     @Transactional
     public void updateCart(Cart cart){
-        Cart cartUpdate=cartRepository.findByUserIdAndItemId(cart.getUserId(),cart.getItemId());
-        cartUpdate.setQuantity(cart.getQuantity());
+        Optional<Cart> cartUpdate=cartRepository.findByUserIdAndItemId(cart.getUserId(),cart.getItemId());
+        if (cartUpdate.isPresent()) {
+            cartUpdate.get().setQuantity(cart.getQuantity());
+            cartUpdate.get().setPurchased(cart.isPurchased());
+        }
+        else{
+            throw new IllegalStateException("Item does not exist in cart");
+        }
     }
 }
