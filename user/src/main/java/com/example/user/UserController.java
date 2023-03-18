@@ -27,7 +27,7 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     public @ResponseBody UserDTO getUserDets(@RequestParam("username") String username, @RequestParam("password") String password){
         Optional<User> user= userRepository.findByUsername(username);
         if (user==null){
