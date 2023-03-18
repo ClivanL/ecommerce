@@ -2,10 +2,7 @@ package com.example.cart;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,16 @@ public class CartController {
     @GetMapping(path="{userId}")
     public List<Cart> getCartItemsByUserId(@PathVariable("userId") Long userId){
         return cartService.getCartItemsByUserId(userId);
+    }
+
+    @PostMapping
+    public void addCartItem(@RequestBody Cart cart) {
+        cartService.addCartItem(cart);
+    }
+
+    @PutMapping
+    public void editCart(@RequestBody Cart cart){
+        cartService.updateCart(cart);
     }
 
 }

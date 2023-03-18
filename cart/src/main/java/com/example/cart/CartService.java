@@ -3,6 +3,7 @@ package com.example.cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -24,5 +25,14 @@ public class CartService {
         List<Cart> presentCart= Collections.emptyList();
         presentCart=cartRepository.findAllByUserId(userId);
         return presentCart;
+    }
+    public void addCartItem(Cart cart){
+        cartRepository.save(cart);
+    }
+
+    @Transactional
+    public void updateCart(Cart cart){
+        Cart cartUpdate=cartRepository.findByUserIdAndItemId(cart.getUserId(),cart.getItemId());
+        cartUpdate.setQuantity(cart.getQuantity());
     }
 }
