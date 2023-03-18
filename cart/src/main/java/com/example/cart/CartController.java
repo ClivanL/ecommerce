@@ -26,6 +26,11 @@ public class CartController {
         return cartService.getCartItemsByUserId(userId);
     }
 
+//    @GetMapping("userId")
+//    public List<Cart> getCartItemsByUserId(@RequestParam("userId") Long userId){
+//        return cartService.getCartItemsByUserId(userId);
+//    }
+
     @PostMapping
     public void addCartItem(@RequestBody Cart cart) {
         cartService.addCartItem(cart);

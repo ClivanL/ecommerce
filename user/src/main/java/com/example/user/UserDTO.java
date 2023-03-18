@@ -2,6 +2,8 @@ package com.example.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class UserDTO {
     @JsonProperty("id")
     private int id;
