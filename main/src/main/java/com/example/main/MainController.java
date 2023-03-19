@@ -1,12 +1,16 @@
 package com.example.main;
 
 import com.example.main.models.Cart;
+import com.example.main.models.CartList;
 import com.example.main.models.User;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,8 +31,9 @@ public class MainController {
         User verifiedUser = restTemplate.postForObject(uri,attemptLogin, User.class);
         Long userId=verifiedUser.getId();
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
-        Cart cart=restTemplate.getForObject(uri2, Cart.class, Map.of("id",1));
-        Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),cart.getItemId(),cart.getQuantity(),cart.isPurchased());
+        Cart[] response=restTemplate.getForObject(uri2, Cart[].class);
+        List<Cart> carts= Arrays.asList(response);
+        Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
     }
 
