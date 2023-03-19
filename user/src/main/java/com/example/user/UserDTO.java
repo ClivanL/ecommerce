@@ -6,7 +6,7 @@ import java.util.List;
 
 public class UserDTO {
     @JsonProperty("id")
-    private int id;
+    private Long id;
 
     @JsonProperty("username")
     private String username;
@@ -20,7 +20,7 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(int id, String username, String email, String name) {
+    public UserDTO(Long id, String username, String email, String name) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -33,11 +33,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
