@@ -2,10 +2,11 @@ package com.example.main;
 
 import com.example.main.models.Cart;
 import com.example.main.models.CartList;
+import com.example.main.models.Item;
 import com.example.main.models.User;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +36,15 @@ public class MainController {
         List<Cart> carts= Arrays.asList(response);
         Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
+    }
+    @PostMapping("products/new")
+    public String addNewProduct(@RequestBody Item item){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<Item> entity= new HttpEntity<Item>(item,headers);
+        return restTemplate.exchange("http://item-server:8080/api/item", HttpMethod.POST, entity, String.class).getBody();
+
     }
 
 }
