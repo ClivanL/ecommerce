@@ -1,8 +1,7 @@
 package com.example.main.models;
 
-import javax.persistence.Entity;
 
-@Entity
+
 public class User {
     private Long id;
     private String username;

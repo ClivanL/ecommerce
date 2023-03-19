@@ -1,8 +1,6 @@
 package com.example.main.models;
 
-import javax.persistence.Entity;
 
-@Entity
 public class Cart {
     private Long id;
     private Long userId;

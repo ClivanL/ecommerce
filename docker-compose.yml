@@ -40,6 +40,16 @@ services:
             - 16666:8083
         networks:
             - spring-cloud-network
+    main-server:
+        container_name: main-server
+        build:
+            context: main
+            dockerfile: Dockerfile
+        image: main-server:latest
+        ports:
+            - 15555:8084
+        networks:
+            - spring-cloud-network
 networks:
     spring-cloud-network:
         driver: bridge

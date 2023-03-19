@@ -1,8 +1,6 @@
 package com.example.main;
 
-import javax.persistence.Entity;
 
-@Entity
 public class Main {
 
     private String username;
