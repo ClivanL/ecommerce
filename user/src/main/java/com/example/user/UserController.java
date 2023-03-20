@@ -2,11 +2,14 @@ package com.example.user;
 
 
 import com.example.user.mapstruct.mappers.MapStructMapper;
+import net.bytebuddy.utility.RandomString;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.random.RandomGenerator;
 
 @RestController
 @RequestMapping(path="/api/user")
@@ -59,6 +62,23 @@ public class UserController {
                 UserDTO check= mapStructMapper.userToUserDTO(presentUser);
                 System.out.println(check.toString());
                 return check;
+            }
+        }
+    }
+
+    @PostMapping("loginForToken")
+    public @ResponseBody String generateToken(@RequestBody User attemptLogin){
+        Optional<User> user= userRepository.findByUsername(attemptLogin.getUsername());
+        if (user==null){
+            throw new IllegalArgumentException("wrong username or password");
+        }
+        else{
+            User presentUser=user.get();
+            if(!(presentUser.getPassword().equals(attemptLogin.getPassword()))){
+                throw new IllegalArgumentException(presentUser.getEmail());
+            }
+            else{
+                return RandomStringUtils.randomAlphanumeric(15);
             }
         }
     }
