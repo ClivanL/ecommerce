@@ -37,7 +37,7 @@ public class MainController {
         Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
     }
-    @PostMapping("products/new")
+    @PostMapping("item/new")
     public String addNewProduct(@RequestBody Item item){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
