@@ -16,6 +16,7 @@ public class SessionController {
     private final SessionService sessionService;
     private final SessionRepository sessionRepository;
 
+
     @Autowired
     public SessionController(SessionService sessionService, SessionRepository sessionRepository){
         this.sessionService=sessionService;
@@ -24,6 +25,7 @@ public class SessionController {
 
     @PostMapping("login")
     public void createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
+        System.out.println("inside login attempt");
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/loginForToken";
         String sessionToken= restTemplate.postForObject(uri,attemptLogin, String.class);
@@ -34,5 +36,6 @@ public class SessionController {
         sessionService.saveSession(userSession);
         HttpSession session=request.getSession();
         session.setAttribute("sessionDetails",userSession);
+        System.out.println("your session details here"+session.getAttribute("sessionDetails").toString());
     }
 }

@@ -58,4 +58,13 @@ public class Session {
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
     }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", sessionToken='" + sessionToken + '\'' +
+                '}';
+    }
 }

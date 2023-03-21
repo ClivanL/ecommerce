@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class MainController {
     }
 
     @PostMapping("login")
-    public @ResponseBody Main getMainDetails(@RequestParam("username") String username, @RequestParam("password") String password){
+    public @ResponseBody Main getMainDetails(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
         RestTemplate restTemplate = new RestTemplate();
         User attemptLogin = new User(username,password);
         final String uri="http://user-server:8081/api/user/login";
