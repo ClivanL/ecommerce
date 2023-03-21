@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(path="/home")
+@CrossOrigin(origins="http://localhost:5173")
 public class SessionController {
 
     private final SessionService sessionService;
@@ -24,7 +25,7 @@ public class SessionController {
     }
 
     @PostMapping("login")
-    public void createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
+    public @ResponseBody Session createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
         System.out.println("inside login attempt");
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/loginForToken";
@@ -37,5 +38,6 @@ public class SessionController {
         HttpSession session=request.getSession();
         session.setAttribute("sessionDetails",userSession);
         System.out.println("your session details here"+session.getAttribute("sessionDetails").toString());
+        return userSession;
     }
 }
