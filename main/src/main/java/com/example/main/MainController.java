@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping(path="/api/main")
+@CrossOrigin(origins="http://localhost:5173")
 public class MainController {
     private final MainService mainService;
 
@@ -26,11 +28,11 @@ public class MainController {
     }
 
     @PostMapping("login")
-    public @ResponseBody Main getMainDetails(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
+    public @ResponseBody Main getMainDetails(@RequestBody User user, HttpSession session){
+        System.out.println("retrieving session details"+session.getAttribute("sessionDetails").toString());
         RestTemplate restTemplate = new RestTemplate();
-        User attemptLogin = new User(username,password);
         final String uri="http://user-server:8081/api/user/login";
-        User verifiedUser = restTemplate.postForObject(uri,attemptLogin, User.class);
+        User verifiedUser = restTemplate.postForObject(uri,user, User.class);
         Long userId=verifiedUser.getId();
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
         Cart[] response=restTemplate.getForObject(uri2, Cart[].class);

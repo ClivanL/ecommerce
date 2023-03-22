@@ -1,4 +1,4 @@
-package com.example.main.Session;
+package com.example.main.Sess;
 
 
 import com.example.main.models.User;
@@ -12,20 +12,20 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping(path="/home")
 @CrossOrigin(origins="http://localhost:5173")
-public class SessionController {
+public class SessController {
 
-    private final SessionService sessionService;
-    private final SessionRepository sessionRepository;
+    private final SessService sessService;
+    private final SessRepository sessRepository;
 
 
     @Autowired
-    public SessionController(SessionService sessionService, SessionRepository sessionRepository){
-        this.sessionService=sessionService;
-        this.sessionRepository=sessionRepository;
+    public SessController(SessService sessService, SessRepository sessRepository){
+        this.sessService=sessService;
+        this.sessRepository=sessRepository;
     }
 
     @PostMapping("login")
-    public @ResponseBody Session createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
+    public @ResponseBody Sess createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
         System.out.println("inside login attempt");
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/loginForToken";
@@ -33,10 +33,10 @@ public class SessionController {
         final String uri2="http://user-server:8081/api/user/login";
         User verifiedUser = restTemplate.postForObject(uri2,attemptLogin, User.class);
         Long userId=verifiedUser.getId();
-        Session userSession= new Session(userId, sessionToken);
-        sessionService.saveSession(userSession);
+        Sess userSession= new Sess(userId, sessionToken);
+        sessService.saveSession(userSession);
         HttpSession session=request.getSession();
-        session.setAttribute("sessionDetails",userSession);
+        session.setAttribute("sessionDetails",userId);
         System.out.println("your session details here"+session.getAttribute("sessionDetails").toString());
         return userSession;
     }

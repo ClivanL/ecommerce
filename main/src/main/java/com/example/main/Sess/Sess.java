@@ -1,11 +1,11 @@
-package com.example.main.Session;
+package com.example.main.Sess;
 
 import javax.persistence.*;
 
 
 @Entity
 @Table(name="session", schema="public")
-public class Session {
+public class Sess {
 
     @Id
     @SequenceGenerator(
@@ -21,18 +21,18 @@ public class Session {
     private Long userId;
     private String sessionToken;
 
-    public Session(Long id, Long userId, String sessionToken) {
+    public Sess(Long id, Long userId, String sessionToken) {
         this.id = id;
         this.userId = userId;
         this.sessionToken = sessionToken;
     }
 
-    public Session(Long userId, String sessionToken) {
+    public Sess(Long userId, String sessionToken) {
         this.userId = userId;
         this.sessionToken = sessionToken;
     }
 
-    public Session() {
+    public Sess() {
     }
 
     public Long getId() {
