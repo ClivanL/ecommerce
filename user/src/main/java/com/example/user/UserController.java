@@ -1,6 +1,7 @@
 package com.example.user;
 
 
+import com.example.user.data.Sess;
 import com.example.user.mapstruct.mappers.MapStructMapper;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.random.RandomGenerator;
 
@@ -47,27 +49,38 @@ public class UserController {
 //    }
 //}
 
-    @PostMapping("login")
-    public @ResponseBody UserDTO getUserDets(@RequestBody User attemptLogin){
-        Optional<User> user= userRepository.findByUsername(attemptLogin.getUsername());
-        if (user==null){
-            throw new IllegalArgumentException("wrong username or password");
+//    @PostMapping("login")
+//    public @ResponseBody UserDTO getUserDets(@RequestBody User attemptLogin){
+//        Optional<User> user= userRepository.findByUsername(attemptLogin.getUsername());
+//        if (user==null){
+//            throw new IllegalArgumentException("wrong username or password");
+//        }
+//        else{
+//            User presentUser=user.get();
+//            if(!(presentUser.getPassword().equals(attemptLogin.getPassword()))){
+//                throw new IllegalArgumentException(presentUser.getEmail());
+//            }
+//            else{
+//                UserDTO check= mapStructMapper.userToUserDTO(presentUser);
+//                System.out.println(check.toString());
+//                return check;
+//            }
+//        }
+//    }
+
+    @GetMapping(path="{userId}")
+    public UserDTO getUserDetails (@PathVariable("userId")Long userId){
+        Optional<User> checkUser=userRepository.findById(userId);
+        if (checkUser.isEmpty()){
+            throw new IllegalArgumentException("user does not exist");
         }
-        else{
-            User presentUser=user.get();
-            if(!(presentUser.getPassword().equals(attemptLogin.getPassword()))){
-                throw new IllegalArgumentException(presentUser.getEmail());
-            }
-            else{
-                UserDTO check= mapStructMapper.userToUserDTO(presentUser);
-                System.out.println(check.toString());
-                return check;
-            }
+        else {
+            return mapStructMapper.userToUserDTO(checkUser.get());
         }
     }
 
     @PostMapping("loginForToken")
-    public @ResponseBody String generateToken(@RequestBody User attemptLogin){
+    public @ResponseBody Sess generateToken(@RequestBody User attemptLogin){
         Optional<User> user= userRepository.findByUsername(attemptLogin.getUsername());
         if (user==null){
             throw new IllegalArgumentException("wrong username or password");
@@ -78,7 +91,7 @@ public class UserController {
                 throw new IllegalArgumentException(presentUser.getEmail());
             }
             else{
-                return RandomStringUtils.randomAlphanumeric(15);
+                return new Sess(presentUser.getId(),RandomStringUtils.randomAlphanumeric(15)) ;
             }
         }
     }

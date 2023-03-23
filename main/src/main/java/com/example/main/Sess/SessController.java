@@ -29,15 +29,16 @@ public class SessController {
         System.out.println("inside login attempt");
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/loginForToken";
-        String sessionToken= restTemplate.postForObject(uri,attemptLogin, String.class);
-        final String uri2="http://user-server:8081/api/user/login";
-        User verifiedUser = restTemplate.postForObject(uri2,attemptLogin, User.class);
-        Long userId=verifiedUser.getId();
-        Sess userSession= new Sess(userId, sessionToken);
-        sessService.saveSession(userSession);
+        Sess sessionDetails= restTemplate.postForObject(uri,attemptLogin, Sess.class);
+        Long userId=sessionDetails.getUserId();
+        sessService.saveSession(sessionDetails);
         HttpSession session=request.getSession();
-        session.setAttribute("sessionDetails",userId);
-        System.out.println("your session details here"+session.getAttribute("sessionDetails").toString());
-        return userSession;
+        session.setAttribute("userId",userId);
+        return sessionDetails;
+    }
+
+    @PostMapping("logout")
+    public void invalidateSessionToken(HttpServletRequest request) {
+        request.getSession().invalidate();
     }
 }

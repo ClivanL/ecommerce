@@ -27,13 +27,15 @@ public class MainController {
         this.mainService=mainService;
     }
 
-    @PostMapping("login")
-    public @ResponseBody Main getMainDetails(@RequestBody User user, HttpSession session){
-        System.out.println("retrieving session details"+session.getAttribute("sessionDetails").toString());
+    @PostMapping("retrieveAccountDetails")
+    public @ResponseBody Main getMainDetails(HttpSession session){
+        if (session==null) {
+            throw new IllegalStateException("You are not logged in.");
+        }
+        Long userId= (Long) session.getAttribute("userId");
         RestTemplate restTemplate = new RestTemplate();
-        final String uri="http://user-server:8081/api/user/login";
-        User verifiedUser = restTemplate.postForObject(uri,user, User.class);
-        Long userId=verifiedUser.getId();
+        final String uri="http://user-server:8081/api/user/"+userId;
+        User verifiedUser = restTemplate.getForObject(uri,User.class);
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
         Cart[] response=restTemplate.getForObject(uri2, Cart[].class);
         List<Cart> carts= Arrays.asList(response);

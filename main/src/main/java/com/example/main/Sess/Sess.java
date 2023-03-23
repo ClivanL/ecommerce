@@ -19,17 +19,17 @@ public class Sess {
     )
     private Long id;
     private Long userId;
-    private String sessionToken;
+    private String sessToken;
 
-    public Sess(Long id, Long userId, String sessionToken) {
+    public Sess(Long id, Long userId, String sessToken) {
         this.id = id;
         this.userId = userId;
-        this.sessionToken = sessionToken;
+        this.sessToken = sessToken;
     }
 
-    public Sess(Long userId, String sessionToken) {
+    public Sess(Long userId, String sessToken) {
         this.userId = userId;
-        this.sessionToken = sessionToken;
+        this.sessToken = sessToken;
     }
 
     public Sess() {
@@ -51,12 +51,12 @@ public class Sess {
         this.userId = userId;
     }
 
-    public String getSessionToken() {
-        return sessionToken;
+    public String getSessToken() {
+        return sessToken;
     }
 
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
+    public void setSessToken(String sessToken) {
+        this.sessToken = sessToken;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Sess {
         return "Session{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", sessionToken='" + sessionToken + '\'' +
+                ", sessToken='" + sessToken + '\'' +
                 '}';
     }
 }
