@@ -28,7 +28,8 @@ public class MainController {
     }
 
     @PostMapping("retrieveAccountDetails")
-    public @ResponseBody Main getMainDetails(HttpSession session){
+    public @ResponseBody Main getMainDetails(HttpServletRequest request){
+        HttpSession session=request.getSession(false);
         if (session==null) {
             throw new IllegalStateException("You are not logged in.");
         }
