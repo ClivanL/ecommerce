@@ -27,6 +27,7 @@ public class SessController {
     @PostMapping("login")
     public @ResponseBody Sess createSessionToken(@RequestBody User attemptLogin, HttpServletRequest request){
         System.out.println("inside login attempt");
+        System.out.println(attemptLogin.toString());
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/loginForToken";
         Sess sessionDetails= restTemplate.postForObject(uri,attemptLogin, Sess.class);

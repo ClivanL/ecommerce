@@ -1,4 +1,6 @@
 package com.example.user;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,10 +18,19 @@ public class User {
             generator = "user_sequence"
     )
 
+    @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("username")
     private String username;
+
+    @JsonProperty("password")
     private String password;
+
+    @JsonProperty("name")
     private String name;
+
+    @JsonProperty("email")
     private String email;
 
 
