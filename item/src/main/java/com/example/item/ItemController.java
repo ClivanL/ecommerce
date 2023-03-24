@@ -35,6 +35,19 @@ public class ItemController {
             return null;
         }
     }
+    @GetMapping(path="{itemId}")
+    public @ResponseBody Item getItemById(@PathVariable("itemId")Long itemId){
+        return itemRepository.findById(itemId).get();
+    }
+
+    @PostMapping("retrieveItemDetails")
+    public List<Item> getItemDetails(@RequestBody Long[] itemIds){
+        Item[] itemDetails = new Item[itemIds.length];
+        for (int i=0; i<itemIds.length;i++){
+            itemDetails[i]=itemRepository.findById(itemIds[i]).get();
+        }
+        return List.of(itemDetails);
+    }
 
     @PostMapping
     public void addItem(@RequestBody Item item){

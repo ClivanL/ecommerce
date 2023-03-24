@@ -21,22 +21,19 @@ public class Cart {
     private Long userId;
     private Long itemId;
     private int quantity;
-    private boolean purchased;
 
 
-    public Cart(Long id, Long userId, Long itemId, int quantity, boolean purchased) {
+    public Cart(Long id, Long userId, Long itemId, int quantity) {
         this.id = id;
         this.userId = userId;
         this.itemId = itemId;
         this.quantity=quantity;
-        this.purchased=purchased;
     }
 
-    public Cart(Long userId, Long itemId, int quantity, boolean purchased) {
+    public Cart(Long userId, Long itemId, int quantity) {
         this.userId = userId;
         this.itemId = itemId;
         this.quantity=quantity;
-        this.purchased=purchased;
     }
 
     public Cart() {
@@ -74,13 +71,6 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public boolean isPurchased() {
-        return purchased;
-    }
-
-    public void setPurchased(boolean purchased) {
-        this.purchased = purchased;
-    }
 
     @Override
     public String toString() {
@@ -89,7 +79,6 @@ public class Cart {
                 ", userId=" + userId +
                 ", itemId=" + itemId +
                 ", quantity=" + quantity +
-                ", purchased=" + purchased +
                 '}';
     }
 }

@@ -11,10 +11,10 @@ public class CartConfig {
     @Bean
     CommandLineRunner commandLineRunner(CartRepository cartRepository){
         return args ->{
-            Cart cart1 = new Cart(1L,1L,30,false);
-            Cart cart2 = new Cart(1L,2L,34,false);
-            Cart cart3 = new Cart(2L,1L,32,false);
-            Cart cart4 = new Cart(1L,3L,36,false);
+            Cart cart1 = new Cart(1L,5L,30);
+            Cart cart2 = new Cart(1L,6L,34);
+            Cart cart3 = new Cart(2L,7L,32);
+            Cart cart4 = new Cart(1L,5L,36);
             cartRepository.saveAll(List.of(cart1,cart2,cart3,cart4));
         };
     }

@@ -3,6 +3,8 @@ package com.example.main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class Cart {
     @JsonProperty("id")
     private Long id;
@@ -16,16 +18,20 @@ public class Cart {
     @JsonProperty("quantity")
     private int quantity;
 
-    @JsonProperty("purchased")
-    private boolean purchased;
+    @JsonProperty("item")
+    private Item item;
 
     public Cart() {
     }
 
-    public Cart(Long itemId, int quantity, boolean purchased) {
+    public Cart(int quantity, Item item) {
+        this.quantity = quantity;
+        this.item = item;
+    }
+
+    public Cart(Long itemId, int quantity) {
         this.itemId = itemId;
         this.quantity = quantity;
-        this.purchased = purchased;
     }
 
     public Long getId() {
@@ -44,7 +50,6 @@ public class Cart {
         return quantity;
     }
 
-    public boolean isPurchased() {
-        return purchased;
-    }
+
+
 }

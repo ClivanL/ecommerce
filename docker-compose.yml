@@ -7,7 +7,7 @@ services:
             dockerfile: Dockerfile
         image: item-server:latest
         ports:
-            - 18888:8080
+            - 16666:8080
         networks:
             - spring-cloud-network
     user-server:
@@ -37,7 +37,7 @@ services:
             dockerfile: Dockerfile
         image: cart-server:latest
         ports:
-            - 16666:8083
+            - 18888:8083
         networks:
             - spring-cloud-network
     main-server:

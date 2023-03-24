@@ -1,7 +1,6 @@
 package com.example.main;
 
 import com.example.main.models.Cart;
-import com.example.main.models.CartList;
 import com.example.main.models.Item;
 import com.example.main.models.User;
 import org.hibernate.transform.CacheableResultTransformer;
@@ -39,7 +38,20 @@ public class MainController {
         User verifiedUser = restTemplate.getForObject(uri,User.class);
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
         Cart[] response=restTemplate.getForObject(uri2, Cart[].class);
-        List<Cart> carts= Arrays.asList(response);
+        Cart[] newResponse=new Cart[response.length];
+        for (int i=0;i<response.length;i++){
+            String uriForItem="http://item-server:8080/api/item/"+response[i].getItemId();
+            Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
+            newResponse[i]=new Cart(response[i].getQuantity(),itemResponse);
+        }
+//        Long itemIds[]=new Long[response.length];
+//        for (var i=0; i<response.length;i++) {
+//            itemIds[i]=response[i].getItemId();
+//        }
+//        final String uri3="http://item-server:8083/api/item/retrieveItemsDetails";
+//        Item[] itemDetails=restTemplate.postForObject(uri3,itemIds,Item[].class);
+//        System.out.println(itemDetails[0].toString());
+        List<Cart> carts= Arrays.asList(newResponse);
         Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
     }
