@@ -38,7 +38,7 @@ public class SessController {
         return sessionDetails;
     }
 
-    @PostMapping("logout")
+    @GetMapping("logout")
     public void invalidateSessionToken(HttpServletRequest request) {
         request.getSession().invalidate();
     }
