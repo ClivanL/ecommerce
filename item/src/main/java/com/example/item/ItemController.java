@@ -21,8 +21,11 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<Item> getItems() {
-        return itemService.getItems();
+    public Item[] getItems() {
+        List<Item> items=itemService.getItems();
+        Item[] itemArray = new Item[items.size()];
+        items.toArray(itemArray);
+        return itemArray;
     }
 
     @GetMapping("search")

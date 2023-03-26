@@ -65,4 +65,12 @@ public class MainController {
 
     }
 
+    @GetMapping("item/all")
+    public @ResponseBody List<Item> getItems(){
+        RestTemplate restTemplate= new RestTemplate();
+        final String uri="http://item-server:8080/api/item";
+        Item[] itemsArray= restTemplate.getForObject(uri,Item[].class);
+        return Arrays.asList(itemsArray);
+    }
+
 }
