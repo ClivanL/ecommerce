@@ -1,4 +1,3 @@
-version: '2'
 services:
     item-server:
         container_name: item-server
@@ -35,6 +34,9 @@ services:
         build:
             context: cart
             dockerfile: Dockerfile
+        depends_on: 
+            item-server:
+               condition: service_started
         image: cart-server:latest
         ports:
             - 18888:8083
