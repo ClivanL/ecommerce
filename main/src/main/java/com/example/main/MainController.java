@@ -52,16 +52,16 @@ public class MainController {
 //        Item[] itemDetails=restTemplate.postForObject(uri3,itemIds,Item[].class);
 //        System.out.println(itemDetails[0].toString());
         List<Cart> carts= Arrays.asList(newResponse);
-        Main main= new Main(verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
+        Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
     }
     @PostMapping("item/new")
-    public String addNewProduct(@RequestBody Item item){
+    public void addNewProduct(@RequestBody Item item){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<Item> entity= new HttpEntity<Item>(item,headers);
-        return restTemplate.exchange("http://item-server:8080/api/item", HttpMethod.POST, entity, String.class).getBody();
+        restTemplate.exchange("http://item-server:8080/api/item", HttpMethod.POST, entity, String.class).getBody();
 
     }
 

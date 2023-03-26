@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Main {
 
+    @JsonProperty("userId")
+    private Long userId;
+
     @JsonProperty("username")
     private String username;
 
@@ -26,6 +29,14 @@ public class Main {
     }
 
     public Main(String username, String name, String email, List<Cart> cartItems) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.cartItems = cartItems;
+    }
+
+    public Main(Long userId, String username, String name, String email, List<Cart> cartItems) {
+        this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
