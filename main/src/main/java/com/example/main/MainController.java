@@ -65,6 +65,13 @@ public class MainController {
 
     }
 
+    @PostMapping("cart/addToCart")
+    public Cart addToCart(@RequestBody Cart cart){
+        RestTemplate restTemplate = new RestTemplate();
+        final String uri="http://cart-server:8083/api/cart";
+        return restTemplate.postForObject(uri, cart, Cart.class);
+    }
+
     @GetMapping("item/all")
     public @ResponseBody List<Item> getItems(){
         RestTemplate restTemplate= new RestTemplate();
