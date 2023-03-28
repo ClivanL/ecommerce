@@ -80,4 +80,11 @@ public class MainController {
         return Arrays.asList(itemsArray);
     }
 
+    @DeleteMapping("cart/{cartId}")
+    public void deleteCart(@PathVariable("cartId") Long cartId){
+        RestTemplate restTemplate= new RestTemplate();
+        final String uri="http://cart-server:8083/api/cart/"+cartId;
+        restTemplate.delete(uri);
+    }
+
 }
