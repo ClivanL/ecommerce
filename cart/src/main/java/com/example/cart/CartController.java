@@ -42,4 +42,9 @@ public class CartController {
         cartService.updateCart(cart);
     }
 
+    @DeleteMapping(path="{cartId}")
+    public void deleteCart(@PathVariable("cartId") Long cartId){
+       cartRepository.deleteById(cartId);
+    }
+
 }
