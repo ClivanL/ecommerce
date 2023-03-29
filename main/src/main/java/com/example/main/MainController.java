@@ -11,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,17 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://cart-server:8083/api/cart";
         return restTemplate.postForObject(uri, cart, Cart.class);
+    }
+
+    @PostMapping("cart/checkOutCart")
+    public Main checkOutCart(@RequestBody Main main){
+        List<Cart> cartItems=main.getCartItems();
+        mainService.updateMain(cartItems);
+    System.out.println("you're here");
+        List<Cart>emptyCart= new ArrayList<>();
+        Main mainCopy= new Main(main);
+        mainCopy.setCartItems(emptyCart);
+        return mainCopy;
     }
 
     @GetMapping("item/all")
