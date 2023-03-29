@@ -49,6 +49,11 @@ public class Item {
         this.ownerId = ownerId;
     }
 
+    public Item(Long id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
+    }
+
     public Item() {
     }
 

@@ -48,6 +48,9 @@ public class ItemService {
                 throw new IllegalStateException("item name exists");
             }
         }
+        if (itemInSystem.getQuantity()<item.getQuantity()){
+            throw new IllegalStateException("insufficient quantity");
+        }
         itemInSystem.setItemName(item.getItemName());
         itemInSystem.setDescription(item.getDescription());
         itemInSystem.setImageUrl(item.getImageUrl());
