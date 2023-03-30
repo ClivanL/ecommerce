@@ -64,5 +64,10 @@ public class ItemController {
     public void updateItem(@PathVariable("itemId") Long itemId, @RequestBody Item item){
         itemService.updateItem(itemId, item);
     }
+    @PutMapping("update/{itemId}")
+    public void updateItemQuantity(@PathVariable("itemId") Long itemId, @RequestBody Item item) {
+        itemService.updateItemQuantity(itemId, item);
+    }
+
 }
 

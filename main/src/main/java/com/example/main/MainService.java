@@ -31,15 +31,12 @@ public class MainService {
         String uri="";
 
         //update quantity in item's database
-        uri="http://item-server:8080/api/item/"+itemId.toString();
+        uri="http://item-server:8080/api/item/update/"+itemId.toString();
         HttpEntity<Item> requestUpdate= new HttpEntity<>(new Item(itemId,quantity));
         restTemplate.exchange(uri, HttpMethod.PUT, requestUpdate,Void.class);
-
-        //error here...
 
         //delete cart from database
         uri="http://cart-server:8083/api/cart/"+cartId.toString();
         restTemplate.delete(uri);
-        System.out.println("you're here");
     }
 }

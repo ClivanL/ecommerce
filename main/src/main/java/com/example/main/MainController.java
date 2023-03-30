@@ -44,7 +44,7 @@ public class MainController {
         for (int i=0;i<response.length;i++){
             String uriForItem="http://item-server:8080/api/item/"+response[i].getItemId();
             Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
-            newResponse[i]=new Cart(response[i].getQuantity(),itemResponse);
+            newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse);
         }
 //        Long itemIds[]=new Long[response.length];
 //        for (var i=0; i<response.length;i++) {

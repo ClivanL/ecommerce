@@ -51,6 +51,8 @@ public class ItemService {
         if (itemInSystem.getQuantity()<item.getQuantity()){
             throw new IllegalStateException("insufficient quantity");
         }
+
+
         itemInSystem.setItemName(item.getItemName());
         itemInSystem.setDescription(item.getDescription());
         itemInSystem.setImageUrl(item.getImageUrl());
@@ -58,6 +60,21 @@ public class ItemService {
         itemInSystem.setQuantity(item.getQuantity());
         itemInSystem.setCategory(item.getCategory());
 
+
+    }
+
+    @Transactional
+    public void updateItemQuantity(Long itemId, Item item){
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+
+        presentItem.setQuantity(presentItem.getQuantity()-item.getQuantity());
 
     }
 }
