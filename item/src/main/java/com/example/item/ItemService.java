@@ -74,7 +74,11 @@ public class ItemService {
             throw new IllegalStateException("item does not exist");
         }
 
-        presentItem.setQuantity(presentItem.getQuantity()-item.getQuantity());
-
+        if (presentItem.getQuantity()>=item.getQuantity()) {
+            presentItem.setQuantity(presentItem.getQuantity() - item.getQuantity());
+        }
+        else{
+            throw new IllegalStateException("insufficient quantity");
+        }
     }
 }
