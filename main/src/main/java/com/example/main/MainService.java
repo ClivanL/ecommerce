@@ -2,6 +2,7 @@ package com.example.main;
 
 import com.example.main.models.Cart;
 import com.example.main.models.Item;
+import com.example.main.models.PurchaseLog;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -17,16 +18,16 @@ import java.util.List;
 public class MainService {
 
     @Transactional
-    public void updateMain(List<Cart> cartItems){
+    public void updateMain(List<Cart> cartItems, Long userId){
         RestTemplate restTemplate= new RestTemplate();
         String uri="";
         for (int i=0;i<cartItems.size();i++){
-            updateinItemAndCart(cartItems.get(i).getItem().getId(),cartItems.get(i).getQuantity(),cartItems.get(i).getId());
+            updateinItemAndCartAndPurchaseLogs(cartItems.get(i).getItem().getId(),cartItems.get(i).getQuantity(),cartItems.get(i).getId(),userId);
         }
     }
 
     @Transactional
-    public void updateinItemAndCart(Long itemId, int quantity, Long cartId){
+    public void updateinItemAndCartAndPurchaseLogs(Long itemId, int quantity, Long cartId, Long userId){
         RestTemplate restTemplate= new RestTemplate();
         String uri="";
 
@@ -38,5 +39,10 @@ public class MainService {
         //delete cart from database
         uri="http://cart-server:8083/api/cart/"+cartId.toString();
         restTemplate.delete(uri);
+
+        //create purchaseLog in database
+        uri="http://purchaseLog-server:8082/api/purchaselog";
+        HttpEntity<PurchaseLog> requestUpdatePurchaseLog = new HttpEntity<>(new PurchaseLog(itemId,userId,quantity)) ;
+        restTemplate.exchange(uri,HttpMethod.POST,requestUpdatePurchaseLog,Void.class);
     }
 }

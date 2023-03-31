@@ -1,6 +1,8 @@
 package com.example.purchaseLog;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,9 +18,14 @@ public class PurchaseLog {
             strategy = GenerationType.SEQUENCE,
             generator="purchaselog_sequence"
     )
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("itemId")
     private Long itemId;
+    @JsonProperty("userId")
     private Long userId;
+    @JsonProperty("quantity")
+    private int quantity;
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
@@ -29,6 +36,12 @@ public class PurchaseLog {
     public PurchaseLog(Long itemId, Long userId) {
         this.itemId = itemId;
         this.userId = userId;
+    }
+
+    public PurchaseLog(Long itemId, Long userId, int quantity) {
+        this.itemId = itemId;
+        this.userId = userId;
+        this.quantity = quantity;
     }
 
     public PurchaseLog() {
@@ -64,6 +77,7 @@ public class PurchaseLog {
                 "id=" + id +
                 ", itemId=" + itemId +
                 ", userId=" + userId +
+                ", quantity=" + quantity +
                 '}';
     }
 }

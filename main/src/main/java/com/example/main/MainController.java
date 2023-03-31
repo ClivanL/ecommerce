@@ -77,7 +77,7 @@ public class MainController {
     @PostMapping("cart/checkOutCart")
     public Main checkOutCart(@RequestBody Main main){
         List<Cart> cartItems=main.getCartItems();
-        mainService.updateMain(cartItems);
+        mainService.updateMain(cartItems, main.getUserId());
     System.out.println("you're here");
         List<Cart>emptyCart= new ArrayList<>();
         Main mainCopy= new Main(main);
