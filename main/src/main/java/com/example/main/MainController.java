@@ -2,6 +2,7 @@ package com.example.main;
 
 import com.example.main.models.Cart;
 import com.example.main.models.Item;
+import com.example.main.models.PurchaseLog;
 import com.example.main.models.User;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,26 @@ public class MainController {
         Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
     }
+
+    @GetMapping("retrieveTransactionHistory")
+    public @ResponseBody List<Cart> getTransactionHistory(HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        if (session==null) {
+            throw new IllegalStateException("You are not logged in.");
+        }
+        Long userId= (Long) session.getAttribute("userId");
+        RestTemplate restTemplate = new RestTemplate();
+        String uri="http://purchaseLog-server:8082/api/purchaselog/"+userId;
+        PurchaseLog[] purchaseLogs= restTemplate.getForObject(uri,PurchaseLog[].class);
+        List<Cart> purchaseHistory= new ArrayList<>();
+        for (int i=0;i< purchaseLogs.length;i++){
+            uri="http://item-server:8080/api/item/"+purchaseLogs[i].getItemId();
+            Item retrievedItem=restTemplate.getForObject(uri,Item.class);
+            purchaseHistory.add(new Cart(purchaseLogs[i].getQuantity(),retrievedItem));
+        }
+        return purchaseHistory;
+    }
+
     @PostMapping("item/new")
     public void addNewProduct(@RequestBody Item item){
         RestTemplate restTemplate = new RestTemplate();

@@ -31,4 +31,7 @@ public class PurchaseLogService {
         purchaseLogInSystem.setItemId(purchaseLog.getItemId());
         purchaseLogInSystem.setUserId(purchaseLog.getUserId());
     }
+    public List<PurchaseLog> getPurchaseLogsByUserId(Long userId){
+        return purchaseLogRepository.findByUserId(userId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.purchaseLog;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,12 @@ public class PurchaseLogController {
     public List<PurchaseLog> getPurchaseLog(){
         return purchaseLogService.getPurchaseLog();
     }
+
+    @GetMapping(path="{userId}")
+    public List<PurchaseLog> getPurchaseLogsByUserId(@PathVariable("userId")Long userId){
+        return purchaseLogService.getPurchaseLogsByUserId(userId);
+    }
+
     @PostMapping
     public void addPurchaseLog(@RequestBody PurchaseLog purchaseLog){
         purchaseLogService.addPurchaseLog(purchaseLog);
