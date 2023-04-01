@@ -22,7 +22,10 @@ public class PurchaseLogController {
     public List<PurchaseLog> getPurchaseLog(){
         return purchaseLogService.getPurchaseLog();
     }
-
+    @GetMapping(path="sale/{ownerId}")
+    public List<PurchaseLog> getPurchaseLogsByOwnerId(@PathVariable("ownerId")Long ownerId){
+        return purchaseLogService.getPurchaseLogsByOwnerId(ownerId);
+    }
     @GetMapping(path="{userId}")
     public List<PurchaseLog> getPurchaseLogsByUserId(@PathVariable("userId")Long userId){
         return purchaseLogService.getPurchaseLogsByUserId(userId);

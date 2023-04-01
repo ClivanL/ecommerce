@@ -34,4 +34,7 @@ public class PurchaseLogService {
     public List<PurchaseLog> getPurchaseLogsByUserId(Long userId){
         return purchaseLogRepository.findByUserId(userId);
     }
+    public List<PurchaseLog> getPurchaseLogsByOwnerId(Long ownerId){
+        return purchaseLogRepository.findByOwnerId(ownerId);
+    }
 }

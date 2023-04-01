@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface PurchaseLogRepository extends JpaRepository<PurchaseLog,Long> {
     List<PurchaseLog> findByUserId(Long userId);
+    List<PurchaseLog> findByOwnerId(Long ownerId);
 }
