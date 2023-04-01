@@ -89,7 +89,11 @@ public class MainController {
     }
 
     @PostMapping("cart/addToCart")
-    public Cart addToCart(@RequestBody Cart cart){
+    public Cart addToCart(@RequestBody Cart cart, HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        if (session==null) {
+            throw new IllegalStateException("You are not logged in.");
+        }
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://cart-server:8083/api/cart";
         return restTemplate.postForObject(uri, cart, Cart.class);
