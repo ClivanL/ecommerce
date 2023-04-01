@@ -27,7 +27,16 @@ public class CartService {
         return presentCart;
     }
     public void addCartItem(Cart cart){
-        cartRepository.save(cart);
+        Optional<Cart> matchedCart=cartRepository.findByUserIdAndItemId(cart.getUserId(),cart.getItemId());
+        if (matchedCart.isPresent()){
+            System.out.println("inside hereeeeeeeee");
+            Cart presentCart=matchedCart.get();
+            presentCart.setQuantity(presentCart.getQuantity()+cart.getQuantity());
+            cartRepository.save(presentCart);
+        }
+        else {
+            cartRepository.save(cart);
+        }
     }
 
     @Transactional

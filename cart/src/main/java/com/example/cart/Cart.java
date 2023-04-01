@@ -1,6 +1,8 @@
 package com.example.cart;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,9 +19,13 @@ public class Cart {
             strategy = GenerationType.SEQUENCE,
             generator = "item_sequence"
     )
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("userId")
     private Long userId;
+    @JsonProperty("itemId")
     private Long itemId;
+    @JsonProperty("quantity")
     private int quantity;
 
 
