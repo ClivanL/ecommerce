@@ -22,12 +22,12 @@ public class MainService {
         RestTemplate restTemplate= new RestTemplate();
         String uri="";
         for (int i=0;i<cartItems.size();i++){
-            updateinItemAndCartAndPurchaseLogs(cartItems.get(i).getItem().getId(),cartItems.get(i).getQuantity(),cartItems.get(i).getId(),userId);
+            updateinItemAndCartAndPurchaseLogs(cartItems.get(i).getItem().getId(),cartItems.get(i).getQuantity(),cartItems.get(i).getId(),userId, cartItems.get(i).getItem().getOwnerId());
         }
     }
 
     @Transactional
-    public void updateinItemAndCartAndPurchaseLogs(Long itemId, int quantity, Long cartId, Long userId){
+    public void updateinItemAndCartAndPurchaseLogs(Long itemId, int quantity, Long cartId, Long userId, Long ownerId){
         RestTemplate restTemplate= new RestTemplate();
         String uri="";
 
@@ -42,7 +42,7 @@ public class MainService {
 
         //create purchaseLog in database
         uri="http://purchaseLog-server:8082/api/purchaselog";
-        HttpEntity<PurchaseLog> requestUpdatePurchaseLog = new HttpEntity<>(new PurchaseLog(itemId,userId,quantity)) ;
+        HttpEntity<PurchaseLog> requestUpdatePurchaseLog = new HttpEntity<>(new PurchaseLog(itemId,userId,quantity,ownerId)) ;
         restTemplate.exchange(uri,HttpMethod.POST,requestUpdatePurchaseLog,Void.class);
     }
 }

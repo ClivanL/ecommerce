@@ -78,6 +78,17 @@ public class MainController {
         return purchaseHistory;
     }
 
+//    @GetMapping("retrieveSaleHistory")
+//    public @ResponseBody List<Cart> getSaleHistory(HttpServletRequest request){
+//        HttpSession session=request.getSession(false);
+//        if (session==null) {
+//            throw new IllegalStateException("You are not logged in.");
+//        }
+//        Long userId= (Long) session.getAttribute("userId");
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//    }
+
     @PostMapping("item/new")
     public void addNewProduct(@RequestBody Item item){
         RestTemplate restTemplate = new RestTemplate();

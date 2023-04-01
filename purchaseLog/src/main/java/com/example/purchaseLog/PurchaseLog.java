@@ -26,6 +26,8 @@ public class PurchaseLog {
     private Long userId;
     @JsonProperty("quantity")
     private int quantity;
+    @JsonProperty("ownerId")
+    private Long ownerId;
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
@@ -38,10 +40,11 @@ public class PurchaseLog {
         this.userId = userId;
     }
 
-    public PurchaseLog(Long itemId, Long userId, int quantity) {
+    public PurchaseLog(Long itemId, Long userId, int quantity, Long ownerId) {
         this.itemId = itemId;
         this.userId = userId;
         this.quantity = quantity;
+        this.ownerId=ownerId;
     }
 
     public PurchaseLog() {
