@@ -6,6 +6,8 @@ import com.example.user.mapstruct.mappers.MapStructMapper;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -98,8 +100,16 @@ public class UserController {
 
 
     @PostMapping
-    public void createUser(@RequestBody User user){
-        userService.createUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        try{
+            System.out.println(user.toString());
+            userService.createUser(user);
+        }
+        catch(IllegalStateException e){
+            System.out.println("caughterror");
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body("Account successfully created");
     }
 
     @DeleteMapping(path="{userId}")

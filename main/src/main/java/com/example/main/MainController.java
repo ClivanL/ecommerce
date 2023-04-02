@@ -1,11 +1,16 @@
 package com.example.main;
 
+import com.example.main.Sess.Sess;
+import com.example.main.Sess.SessController;
+import com.example.main.errorHandler.RestTemplateResponseErrorHandler;
 import com.example.main.models.Cart;
 import com.example.main.models.Item;
 import com.example.main.models.PurchaseLog;
 import com.example.main.models.User;
+import org.apache.coyote.Response;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -13,20 +18,21 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(path="/api/main")
 @CrossOrigin(origins="http://localhost:5173")
 public class MainController {
     private final MainService mainService;
+    private final SessController sessController;
 
     @Autowired
-    public MainController(MainService mainService){
+    public MainController(MainService mainService, SessController sessController){
+
         this.mainService=mainService;
+        this.sessController=sessController;
+
     }
 
     @PostMapping("retrieveAccountDetails")
@@ -57,6 +63,26 @@ public class MainController {
         List<Cart> carts= Arrays.asList(newResponse);
         Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
         return main;
+    }
+
+    @PostMapping("newAccount")
+    public ResponseEntity<Map<String,String>> createNewAccount(@RequestBody User user, HttpServletRequest request){
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        System.out.println(user.toString());
+        String uri = "http://user-server:8081/api/user";
+        ResponseEntity<String> response=restTemplate.postForEntity(uri,new HttpEntity<>(user),String.class);
+        System.out.println(response.getBody());
+        System.out.println(response.getStatusCodeValue());
+        if (response.getStatusCodeValue()!=201){
+            Map<String,String> message=new HashMap<>();
+            message.put("message",response.getBody());
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+        }
+        Sess sessionDetails=sessController.createSessionToken(new User(user.getUsername(),user.getPassword()),request);
+        Map<String,String> message=new HashMap<>();
+        message.put("message","Account successfully created and session created.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @GetMapping("retrieveTransactionHistory")
