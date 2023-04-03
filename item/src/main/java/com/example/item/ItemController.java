@@ -38,10 +38,16 @@ public class ItemController {
             return null;
         }
     }
+
+    @GetMapping(path="user/{ownerId}")
+    public @ResponseBody List<Item> getItemsByOwnerId(@PathVariable("ownerId") Long ownerId){
+        return itemService.findItemsByOwnerId(ownerId);
+    }
     @GetMapping(path="{itemId}")
     public @ResponseBody Item getItemById(@PathVariable("itemId")Long itemId){
         return itemRepository.findById(itemId).get();
     }
+
 
     @PostMapping("retrieveItemDetails")
     public List<Item> getItemDetails(@RequestBody Long[] itemIds){

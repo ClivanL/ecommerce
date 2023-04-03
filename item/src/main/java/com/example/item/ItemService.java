@@ -39,6 +39,10 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
+    public List<Item> findItemsByOwnerId(Long ownerId){
+        return itemRepository.findByOwnerId(ownerId);
+    }
+
     @Transactional
     public void updateItem(Long itemId, Item item) {
         Optional<Item> itemOptional=itemRepository.findByItemName(item.getItemName());

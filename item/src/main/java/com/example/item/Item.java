@@ -1,12 +1,15 @@
 package com.example.item;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="item", schema="public")
-public class Item {
+public class Item implements Serializable {
 
     @Id
     @SequenceGenerator(
@@ -18,13 +21,22 @@ public class Item {
             strategy = GenerationType.SEQUENCE,
             generator = "item_sequence"
     )
+
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("itemName")
     private String itemName;
+    @JsonProperty("price")
     private Double price;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("imageUrl")
     private String imageUrl;
+    @JsonProperty("quantity")
     private int quantity;
+    @JsonProperty("category")
     private String category;
+    @JsonProperty("ownerId")
     private Long ownerId;
 
 
