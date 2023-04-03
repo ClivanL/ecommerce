@@ -2,7 +2,10 @@ package com.example.main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Item {
+import java.io.Serializable;
+
+
+public class Item implements Serializable {
 
     @JsonProperty("id")
     private Long id;

@@ -3,10 +3,7 @@ package com.example.main;
 import com.example.main.Sess.Sess;
 import com.example.main.Sess.SessController;
 import com.example.main.errorHandler.RestTemplateResponseErrorHandler;
-import com.example.main.models.Cart;
-import com.example.main.models.Item;
-import com.example.main.models.PurchaseLog;
-import com.example.main.models.User;
+import com.example.main.models.*;
 import org.apache.coyote.Response;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +50,11 @@ public class MainController {
             Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
             newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse);
         }
-//        Long itemIds[]=new Long[response.length];
-//        for (var i=0; i<response.length;i++) {
-//            itemIds[i]=response[i].getItemId();
-//        }
-//        final String uri3="http://item-server:8083/api/item/retrieveItemsDetails";
-//        Item[] itemDetails=restTemplate.postForObject(uri3,itemIds,Item[].class);
-//        System.out.println(itemDetails[0].toString());
         List<Cart> carts= Arrays.asList(newResponse);
-        Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts);
+        final String uri3="http://item-server:8080/api/item/user/"+userId;
+        Item[] listedItemsResponse=restTemplate.getForObject(uri3, Item[].class);
+        List<Item>listedItems=Arrays.asList(listedItemsResponse);
+        Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems);
         return main;
     }
 

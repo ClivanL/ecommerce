@@ -2,6 +2,7 @@ package com.example.main;
 
 
 import com.example.main.models.Cart;
+import com.example.main.models.Item;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class Main {
     @JsonProperty("carts")
     private List<Cart> cartItems;
 
+    @JsonProperty("listedItems")
+    private List<Item> listedItems;
+
     public Main() {
     }
 
@@ -35,16 +39,17 @@ public class Main {
         this.cartItems = cartItems;
     }
 
-    public Main(Long userId, String username, String name, String email, List<Cart> cartItems) {
+    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems) {
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.email = email;
         this.cartItems = cartItems;
+        this.listedItems=listedItems;
     }
 
     public Main(Main that) {
-        this(that.getUserId(),that.getUsername(),that.getName(),that.getEmail(),that.getCartItems());
+        this(that.getUserId(),that.getUsername(),that.getName(),that.getEmail(),that.getCartItems(),that.getListedItems());
     }
 
     public List<Cart> getCartItems() {
@@ -85,6 +90,14 @@ public class Main {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Item> getListedItems() {
+        return listedItems;
+    }
+
+    public void setListedItems(List<Item> listedItems) {
+        this.listedItems = listedItems;
     }
 }
 
