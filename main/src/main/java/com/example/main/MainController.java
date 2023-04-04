@@ -148,6 +148,25 @@ public class MainController {
         return mainCopy;
     }
 
+    @PostMapping("owner/updateQuantity")
+    public ResponseEntity<Map<String,String>> updateItemQuantity(@RequestBody Item item){
+        Map<String,String>message= new HashMap<>();
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate=restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        String uri="http://item-server:8080/api/item/owner/update/"+item.getId();
+        HttpEntity<Item> entity= new HttpEntity<>(item);
+        ResponseEntity<String> response=restTemplate.exchange(uri,HttpMethod.PUT,entity,String.class);
+        System.out.println(response.getStatusCodeValue());
+        if (response.getStatusCodeValue()!=500) {
+            message.put("message", "quantity successfully changed");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+        }
+        else{
+            message.put("message", response.getBody());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+
+    }
     @GetMapping("item/all")
     public @ResponseBody List<Item> getItems(){
         RestTemplate restTemplate= new RestTemplate();

@@ -85,4 +85,20 @@ public class ItemService {
             throw new IllegalStateException("insufficient quantity");
         }
     }
+
+    @Transactional
+    public void ownerUpdateItemQuantity(Long itemId, Item item){
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+        if (presentItem.getQuantity()>item.getQuantity()){
+            throw new IllegalStateException("new quantity is less than current quantity");
+        }
+        presentItem.setQuantity(item.getQuantity());
+    }
 }

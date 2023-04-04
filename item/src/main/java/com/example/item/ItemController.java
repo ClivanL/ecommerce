@@ -2,6 +2,8 @@ package com.example.item;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -73,6 +75,17 @@ public class ItemController {
     @PutMapping("update/{itemId}")
     public void updateItemQuantity(@PathVariable("itemId") Long itemId, @RequestBody Item item) {
         itemService.updateItemQuantity(itemId, item);
+    }
+
+    @PutMapping("owner/update/{itemId}")
+    public ResponseEntity<String> amendItemQuantity(@PathVariable("itemId") Long itemId, @RequestBody Item item){
+        try {
+            itemService.ownerUpdateItemQuantity(itemId, item);
+        }
+        catch (Error e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("quantity changed");
     }
 
 }
