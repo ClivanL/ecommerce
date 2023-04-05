@@ -4,10 +4,11 @@ package com.example.cart;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="cart", schema="public")
-public class Cart {
+public class Cart implements Serializable {
 
     @Id
     @SequenceGenerator(
