@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="purchaselog", schema="public")
-public class PurchaseLog {
+public class PurchaseLog extends BaseEntity{
     @Id
     @SequenceGenerator(
             name="purchaselog_sequence",

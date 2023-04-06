@@ -26,11 +26,11 @@ public class PurchaseLogService {
         purchaseLogRepository.deleteById(purchaseLogId);
     }
 
-    public void updatePurchaseLog(Long purchaseLogId, PurchaseLog purchaseLog) {
-        PurchaseLog purchaseLogInSystem=purchaseLogRepository.findById(purchaseLogId).orElseThrow();
-        purchaseLogInSystem.setItemId(purchaseLog.getItemId());
-        purchaseLogInSystem.setUserId(purchaseLog.getUserId());
-    }
+//    public void updatePurchaseLog(Long purchaseLogId, PurchaseLog purchaseLog) {
+//        PurchaseLog purchaseLogInSystem=purchaseLogRepository.findById(purchaseLogId).orElseThrow();
+//        purchaseLogInSystem.setItemId(purchaseLog.getItemId());
+//        purchaseLogInSystem.setUserId(purchaseLog.getUserId());
+//    }
     public List<PurchaseLog> getPurchaseLogsByUserId(Long userId){
         return purchaseLogRepository.findByUserId(userId);
     }

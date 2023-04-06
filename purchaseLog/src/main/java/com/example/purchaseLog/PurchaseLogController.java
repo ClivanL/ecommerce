@@ -39,8 +39,8 @@ public class PurchaseLogController {
     public void deletePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId){
         purchaseLogService.deletePurchaseLog(purchaseLogId);
     }
-    @PutMapping(path="{purchaseLogId}")
-    public void updatePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId, @RequestBody PurchaseLog purchaseLog){
-        purchaseLogService.updatePurchaseLog(purchaseLogId, purchaseLog);
-    }
+//    @PutMapping(path="{purchaseLogId}")
+//    public void updatePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId, @RequestBody PurchaseLog purchaseLog){
+//        purchaseLogService.updatePurchaseLog(purchaseLogId, purchaseLog);
+//    }
 }
