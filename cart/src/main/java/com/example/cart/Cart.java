@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="cart", schema="public")
-public class Cart implements Serializable {
+public class Cart implements Serializable{
 
     @Id
     @SequenceGenerator(

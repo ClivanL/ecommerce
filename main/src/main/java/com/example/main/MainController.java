@@ -79,7 +79,7 @@ public class MainController {
     }
 
     @GetMapping("retrieveTransactionHistory")
-    public @ResponseBody List<Cart> getTransactionHistory(HttpServletRequest request){
+    public @ResponseBody List<PurchaseLog> getTransactionHistory(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         if (session==null) {
             throw new IllegalStateException("You are not logged in.");
@@ -88,17 +88,17 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String uri="http://purchaseLog-server:8082/api/purchaselog/"+userId;
         PurchaseLog[] purchaseLogs= restTemplate.getForObject(uri,PurchaseLog[].class);
-        List<Cart> purchaseHistory= new ArrayList<>();
+        List<PurchaseLog> purchaseHistory= new ArrayList<>();
         for (int i=0;i< purchaseLogs.length;i++){
             uri="http://item-server:8080/api/item/"+purchaseLogs[i].getItemId();
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
-            purchaseHistory.add(new Cart(purchaseLogs[i].getQuantity(),retrievedItem));
+            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem));
         }
         return purchaseHistory;
     }
 
     @GetMapping("retrieveSaleHistory")
-    public @ResponseBody List<Cart> getSaleHistory(HttpServletRequest request){
+    public @ResponseBody List<PurchaseLog> getSaleHistory(HttpServletRequest request){
         HttpSession session=request.getSession(false);
         if (session==null) {
             throw new IllegalStateException("You are not logged in.");
@@ -107,11 +107,11 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String uri="http://purchaseLog-server:8082/api/purchaselog/sale/"+ownerId;
         PurchaseLog[] saleLogs= restTemplate.getForObject(uri,PurchaseLog[].class);
-        List<Cart> saleHistory= new ArrayList<>();
+        List<PurchaseLog> saleHistory= new ArrayList<>();
         for (int i=0;i< saleLogs.length;i++){
             uri="http://item-server:8080/api/item/"+saleLogs[i].getItemId();
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
-            saleHistory.add(new Cart(saleLogs[i].getQuantity(),retrievedItem));
+            saleHistory.add(new PurchaseLog(saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem));
         }
         return saleHistory;
     }

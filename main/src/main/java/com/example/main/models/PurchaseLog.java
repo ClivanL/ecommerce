@@ -2,6 +2,8 @@ package com.example.main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
+
 public class PurchaseLog {
     @JsonProperty("id")
     private Long id;
@@ -14,6 +16,12 @@ public class PurchaseLog {
 
     @JsonProperty("ownerId")
     private Long ownerId;
+
+    @JsonProperty("createdAt")
+    private LocalDateTime createdAt;
+
+    @JsonProperty("item")
+    private Item item;
 
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
@@ -30,6 +38,25 @@ public class PurchaseLog {
         this.userId = userId;
         this.quantity=quantity;
         this.ownerId=ownerId;
+    }
+
+    public PurchaseLog(Long id, Long itemId, Long userId, int quantity, Long ownerId, LocalDateTime createdAt) {
+        this.id = id;
+        this.itemId = itemId;
+        this.userId = userId;
+        this.quantity = quantity;
+        this.ownerId = ownerId;
+        this.createdAt = createdAt;
+    }
+
+    public PurchaseLog(int quantity, LocalDateTime createdAt, Item item) {
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.item = item;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public Long getId() {
