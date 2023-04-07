@@ -80,10 +80,11 @@ public class MainController {
     }
 
     @GetMapping(path="search/{searchItem}")
-    public List<Item> searchForItem(@PathVariable("searchItem")String searchItem){
+    public @ResponseBody List<Item> searchForItem(@PathVariable("searchItem")String searchItem){
         RestTemplate restTemplate=new RestTemplate();
         String uri="http://item-server:8080/api/item/search/"+searchItem;
-        return Arrays.asList(restTemplate.getForObject(uri,Item[].class));
+        List<Item> results= Arrays.asList(restTemplate.getForObject(uri,Item[].class));
+        return results;
     }
 
     @GetMapping("retrieveTransactionHistory")
