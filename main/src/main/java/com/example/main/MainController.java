@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.lang.reflect.Array;
 import java.util.*;
 
 @RestController
@@ -76,6 +77,13 @@ public class MainController {
         Map<String,String> message=new HashMap<>();
         message.put("message","Account successfully created and session created.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
+    }
+
+    @GetMapping(path="search/{searchItem}")
+    public List<Item> searchForItem(@PathVariable("searchItem")String searchItem){
+        RestTemplate restTemplate=new RestTemplate();
+        String uri="http://item-server:8080/api/item/search/"+searchItem;
+        return Arrays.asList(restTemplate.getForObject(uri,Item[].class));
     }
 
     @GetMapping("retrieveTransactionHistory")

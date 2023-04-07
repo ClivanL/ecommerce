@@ -30,15 +30,10 @@ public class ItemController {
         return itemArray;
     }
 
-    @GetMapping("search")
-    public @ResponseBody Optional<Item> getItem(@RequestParam("search") String itemName){
-        Optional<Item> item=itemRepository.findByItemName(itemName);
-        if (item!=null){
-            return item;
-        }
-        else{
-            return null;
-        }
+    @GetMapping(path="search/{searchItem}")
+    public @ResponseBody List<Item> getItem(@PathVariable("searchItem") String itemName){
+        List<Item> items=itemRepository.search(itemName.toLowerCase());
+        return items;
     }
 
     @GetMapping(path="user/{ownerId}")
