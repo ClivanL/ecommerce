@@ -23,6 +23,12 @@ public class PurchaseLog {
     @JsonProperty("item")
     private Item item;
 
+    @JsonProperty("ownerUsername")
+    private String ownerUsername;
+
+    @JsonProperty("userUsername")
+    private String userUsername;
+
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
@@ -53,6 +59,21 @@ public class PurchaseLog {
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.item = item;
+    }
+
+    public PurchaseLog(int quantity, LocalDateTime createdAt, Item item, String ownerUsername) {
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.item = item;
+        this.ownerUsername = ownerUsername;
+    }
+
+    public PurchaseLog(Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername) {
+        this.userId = userId;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.item = item;
+        this.userUsername = userUsername;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -92,7 +92,9 @@ public class MainController {
         for (int i=0;i< purchaseLogs.length;i++){
             uri="http://item-server:8080/api/item/"+purchaseLogs[i].getItemId();
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
-            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem));
+            uri="http://user-server:8081/api/user/"+retrievedItem.getOwnerId();
+            String ownerUsername=restTemplate.getForObject(uri,User.class).getUsername();
+            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem, ownerUsername));
         }
         return purchaseHistory;
     }
@@ -111,7 +113,11 @@ public class MainController {
         for (int i=0;i< saleLogs.length;i++){
             uri="http://item-server:8080/api/item/"+saleLogs[i].getItemId();
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
-            saleHistory.add(new PurchaseLog(saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem));
+            uri="http://user-server:8081/api/user/"+saleLogs[i].getUserId();
+            User retrievedUser=restTemplate.getForObject(uri,User.class);
+            Long retrievedUserId=retrievedUser.getId();
+            String retrievedUserUsername=retrievedUser.getUsername();
+            saleHistory.add(new PurchaseLog(retrievedUserId, saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername));
         }
         return saleHistory;
     }
