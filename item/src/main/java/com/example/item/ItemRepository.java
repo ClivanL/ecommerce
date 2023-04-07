@@ -19,6 +19,6 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
     @Query(value="SELECT * FROM Item WHERE quantity>0 ORDER BY id", nativeQuery = true)
     List<Item> findAll();
 
-    @Query(value="SELECT i FROM Item i WHERE i.itemName LIKE %?1%")
+    @Query(value="SELECT i FROM Item i WHERE lower(i.itemName) LIKE lower(concat('%',?1,'%'))")
     List<Item> search(String itemName);
 }
