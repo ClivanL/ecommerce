@@ -21,4 +21,7 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 
     @Query(value="SELECT i FROM Item i WHERE lower(i.itemName) LIKE lower(concat('%',?1,'%'))")
     List<Item> search(String itemName);
+
+    @Query(value="SELECT i FROM Item i WHERE i.category=?1 ORDER BY id")
+    List<Item> findByCategory(String category);
 }

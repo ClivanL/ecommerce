@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,16 @@ public class ItemController {
         this.itemRepository=itemRepository;
     }
 
-    @GetMapping
-    public Item[] getItems() {
-        List<Item> items=itemService.getItems();
-        Item[] itemArray = new Item[items.size()];
-        items.toArray(itemArray);
-        return itemArray;
+    @GetMapping(path="category/{category}")
+    public List<Item> getItems(@PathVariable("category") String category) {
+        List<Item> items;
+        if (category.equals("all")) {
+            items = itemService.getItems();
+        }
+        else{
+            items=itemService.findItemsByCategory(category);
+        }
+        return items;
     }
 
     @GetMapping(path="search/{searchItem}")

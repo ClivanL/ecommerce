@@ -43,6 +43,10 @@ public class ItemService {
         return itemRepository.findByOwnerId(ownerId);
     }
 
+    public List<Item> findItemsByCategory(String category){
+        return itemRepository.findByCategory(category);
+    }
+
     @Transactional
     public void updateItem(Long itemId, Item item) {
         Optional<Item> itemOptional=itemRepository.findByItemName(item.getItemName());

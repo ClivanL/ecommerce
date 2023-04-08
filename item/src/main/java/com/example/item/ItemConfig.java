@@ -14,13 +14,13 @@ public class ItemConfig {
     CommandLineRunner commandLineRunner(ItemRepository repository){
         return args -> {
             Item chocolates = new Item("Chocolates", 3.50, "cadburry",
-                    "www.image.com", 22, "sweets", 1L
+                    "www.image.com", 22, "Candies", 1L
             );
             Item dimsum = new Item("Dim Sum", 0.50, "Dim Sum",
-                    "www.image.com", 22, "food", 1L
+                    "www.image.com", 22, "Snacks", 1L
             );
             Item csb = new Item("csb", 2.50, "csb",
-                    "www.image.com", 220, "food", 1L
+                    "www.image.com", 220, "Toys", 1L
             );
             repository.saveAll(
                     List.of(chocolates, dimsum,csb)
