@@ -86,6 +86,12 @@ public class MainController {
         List<Item> results= Arrays.asList(restTemplate.getForObject(uri,Item[].class));
         return results;
     }
+    @GetMapping(path="item/id/{id}")
+    public @ResponseBody Item searchForItemById(@PathVariable("id") Long id){
+        RestTemplate restTemplate=new RestTemplate();
+        String uri="http://item-server:8080/api/item/"+id;
+        return restTemplate.getForObject(uri,Item.class);
+    }
 
     @GetMapping("retrieveTransactionHistory")
     public @ResponseBody List<PurchaseLog> getTransactionHistory(HttpServletRequest request){
@@ -182,10 +188,10 @@ public class MainController {
         }
 
     }
-    @GetMapping("item/all")
-    public @ResponseBody List<Item> getItems(){
+    @GetMapping(path="item/{category}")
+    public @ResponseBody List<Item> getItems(@PathVariable("category") String category){
         RestTemplate restTemplate= new RestTemplate();
-        final String uri="http://item-server:8080/api/item";
+        final String uri="http://item-server:8080/api/item/category/"+category;
         Item[] itemsArray= restTemplate.getForObject(uri,Item[].class);
         return Arrays.asList(itemsArray);
     }
