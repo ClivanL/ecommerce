@@ -69,6 +69,11 @@ public class UserController {
 //        }
 //    }
 
+    @GetMapping(path="username/{username}")
+    public User getUserFromUsername(@PathVariable("username")String username){
+        return userRepository.findByUsername(username).get();
+    }
+
     @GetMapping(path="{userId}")
     public UserDTO getUserDetails (@PathVariable("userId")Long userId){
         Optional<User> checkUser=userRepository.findById(userId);

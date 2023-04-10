@@ -3,19 +3,28 @@ package com.example.main;
 import com.example.main.models.Cart;
 import com.example.main.models.Item;
 import com.example.main.models.PurchaseLog;
+import com.example.main.models.User;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class MainService {
+public class MainService{
 
     @Transactional
     public void updateMain(List<Cart> cartItems, Long userId){
