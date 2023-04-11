@@ -11,9 +11,11 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository){
         return args ->{
-            User user1=new User("user1","password", "appleseed", "apple.seed@seed.com");
-            User user2=new User("user2","password","tomatoseed","tomato.seed@seed.com");
+            //password string is after "password" is bcrypt password encoded.
+            User user1=new User("user1","$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6", "appleseed", "apple.seed@seed.com");
+            User user2=new User("user2","$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6","tomatoseed","tomato.seed@seed.com");
             userRepository.saveAll(List.of(user1,user2));
         };
     }
+
 }
