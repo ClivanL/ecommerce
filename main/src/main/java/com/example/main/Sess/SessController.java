@@ -3,6 +3,7 @@ package com.example.main.Sess;
 
 import com.example.main.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,6 +17,7 @@ public class SessController {
 
     private final SessService sessService;
     private final SessRepository sessRepository;
+
 
 
     @Autowired

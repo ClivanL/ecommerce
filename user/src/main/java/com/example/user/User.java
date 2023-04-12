@@ -1,7 +1,12 @@
 package com.example.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="account", schema="public")
@@ -33,7 +38,6 @@ public class User {
     @JsonProperty("email")
     private String email;
 
-
     public User() {
     }
 
@@ -56,7 +60,6 @@ public class User {
         this.name = name;
         this.email = email;
     }
-
     public Long getId() {
         return id;
     }
@@ -96,7 +99,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
     @Override
     public String toString() {
         return "User{" +

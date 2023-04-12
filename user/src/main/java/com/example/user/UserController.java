@@ -8,6 +8,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +24,13 @@ public class UserController {
     private final UserRepository userRepository;
     private final MapStructMapper mapStructMapper;
 
+    private final AuthenticationManager authenticationManager;
     @Autowired
-    public UserController(UserService userService, UserRepository userRepository, MapStructMapper mapStructMapper){
+    public UserController(UserService userService, UserRepository userRepository, MapStructMapper mapStructMapper, AuthenticationManager authenticationManager){
         this.userService=userService;
         this.userRepository=userRepository;
         this.mapStructMapper=mapStructMapper;
+        this.authenticationManager=authenticationManager;
     }
 
     @GetMapping
@@ -87,18 +92,23 @@ public class UserController {
 
     @PostMapping("loginForToken")
     public @ResponseBody Sess generateToken(@RequestBody User attemptLogin){
+        System.out.println(attemptLogin.getPassword());
         Optional<User> user= userRepository.findByUsername(attemptLogin.getUsername());
         if (user==null){
             throw new IllegalArgumentException("wrong username or password");
         }
         else{
             User presentUser=user.get();
-            if(!(presentUser.getPassword().equals(attemptLogin.getPassword()))){
-                throw new IllegalArgumentException(presentUser.getEmail());
-            }
-            else{
-                return new Sess(presentUser.getId(),RandomStringUtils.randomAlphanumeric(15)) ;
-            }
+//            if(!(presentUser.getPassword().equals(attemptLogin.getPassword()))){
+//                throw new IllegalArgumentException(presentUser.getEmail());
+//            }
+//            else{
+//                return new Sess(presentUser.getId(),RandomStringUtils.randomAlphanumeric(15)) ;
+//            }
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                    presentUser.getUsername(), attemptLogin.getPassword());
+            Authentication authentication=authenticationManager.authenticate(token);
+            return new Sess(presentUser.getId(),RandomStringUtils.randomAlphanumeric(15)) ;
         }
     }
 
