@@ -32,7 +32,7 @@ public class JwtAuthenticationController {
     private JwtUserDetailsService userDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         System.out.println("authenticating");
         System.out.println(authenticationRequest.toString());
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
@@ -46,7 +46,7 @@ public class JwtAuthenticationController {
 
         System.out.println(token);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token).getToken());
     }
 
     private void authenticate(String username, String password) throws Exception {

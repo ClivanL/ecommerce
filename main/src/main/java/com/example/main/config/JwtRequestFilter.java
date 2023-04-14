@@ -30,7 +30,18 @@ public class JwtRequestFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        final String requestTokenHeader = request.getHeader("Authorization");
+        System.out.println("filter authorization");
+        String requestTokenHeader;
+        requestTokenHeader = request.getHeader("Authorization");
+       System.out.println("requestTokenHeader:"+requestTokenHeader);
+       if (requestTokenHeader==null){
+           System.out.println("unable to get requestToken from header, checking session for requestToken");
+            //System.out.println(request.getSession().getAttribute("Authorization").toString());
+           if(request.getSession().getAttribute("Authorization")!=null){
+               requestTokenHeader=request.getSession().getAttribute("Authorization").toString();
+           }
+       }
+       System.out.println("requestTokenHeader:"+requestTokenHeader);
 
         String username = null;
         String jwtToken = null;
@@ -57,15 +68,18 @@ public class JwtRequestFilter extends OncePerRequestFilter{
             // if token is valid configure Spring Security to manually set
             // authentication
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-
+                System.out.println("validating token");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
+                System.out.println("validating token");
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                System.out.println("validating token");
                 // After setting the Authentication in the context, we specify
                 // that the current user is authenticated. So it passes the
                 // Spring Security Configurations successfully.
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                System.out.println("validating token complete");
             }
         }
         chain.doFilter(request, response);
