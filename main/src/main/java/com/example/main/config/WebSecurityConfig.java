@@ -93,8 +93,9 @@ public class WebSecurityConfig {
                // .hasAnyRole("USER", "ADMIN")
                 .antMatchers("/authenticate")
                 .permitAll()
+                .antMatchers("/api/main/newAccount")
+                .anonymous()
                 .antMatchers("/home/login")
-//                .antMatchers("**")
                 .anonymous()
                 .anyRequest()
                 .authenticated()
@@ -110,3 +111,6 @@ public class WebSecurityConfig {
     }
 
 }
+
+
+
