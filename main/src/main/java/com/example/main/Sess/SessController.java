@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -62,6 +63,8 @@ public class SessController {
 
     @GetMapping("logout")
     public void invalidateSessionToken(HttpServletRequest request) {
-        request.getSession().invalidate();
+        HttpSession session= request.getSession();
+        session.setAttribute("Authorization","");
+        //session.invalidate();
     }
 }
