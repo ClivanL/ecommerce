@@ -68,7 +68,8 @@ public class PurchaseLog {
         this.item = item;
     }
 
-    public PurchaseLog(int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived) {
+    public PurchaseLog(Long id, int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived) {
+        this.id=id;
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.item = item;
@@ -77,7 +78,8 @@ public class PurchaseLog {
         this.isReceived=isReceived;
     }
 
-    public PurchaseLog(Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived) {
+    public PurchaseLog(Long id, Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived) {
+        this.id=id;
         this.userId = userId;
         this.quantity = quantity;
         this.createdAt = createdAt;

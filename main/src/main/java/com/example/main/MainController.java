@@ -109,7 +109,7 @@ public class MainController {
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
             uri="http://user-server:8081/api/user/"+retrievedItem.getOwnerId();
             String ownerUsername=restTemplate.getForObject(uri,User.class).getUsername();
-            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem, ownerUsername, purchaseLogs[i].getSent(),purchaseLogs[i].getReceived()));
+            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getId(),purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem, ownerUsername, purchaseLogs[i].getSent(),purchaseLogs[i].getReceived()));
         }
         return purchaseHistory;
     }
@@ -132,7 +132,7 @@ public class MainController {
             User retrievedUser=restTemplate.getForObject(uri,User.class);
             Long retrievedUserId=retrievedUser.getId();
             String retrievedUserUsername=retrievedUser.getUsername();
-            saleHistory.add(new PurchaseLog(retrievedUserId, saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived()));
+            saleHistory.add(new PurchaseLog(saleLogs[i].getId(),saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived()));
         }
         return saleHistory;
     }
