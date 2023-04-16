@@ -29,6 +29,13 @@ public class PurchaseLog {
     @JsonProperty("userUsername")
     private String userUsername;
 
+    @JsonProperty("isSent")
+    private Boolean isSent=false;
+
+    @JsonProperty("isReceived")
+    private Boolean isReceived=false;
+
+
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
@@ -61,19 +68,23 @@ public class PurchaseLog {
         this.item = item;
     }
 
-    public PurchaseLog(int quantity, LocalDateTime createdAt, Item item, String ownerUsername) {
+    public PurchaseLog(int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived) {
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.item = item;
         this.ownerUsername = ownerUsername;
+        this.isSent=isSent;
+        this.isReceived=isReceived;
     }
 
-    public PurchaseLog(Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername) {
+    public PurchaseLog(Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived) {
         this.userId = userId;
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.item = item;
         this.userUsername = userUsername;
+        this.isSent=isSent;
+        this.isReceived=isReceived;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -94,5 +105,13 @@ public class PurchaseLog {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public Boolean getSent() {
+        return isSent;
+    }
+
+    public Boolean getReceived() {
+        return isReceived;
     }
 }

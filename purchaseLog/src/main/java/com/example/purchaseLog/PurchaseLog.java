@@ -29,6 +29,12 @@ public class PurchaseLog extends BaseEntity{
     @JsonProperty("ownerId")
     private Long ownerId;
 
+    @JsonProperty("isSent")
+    private Boolean isSent=false;
+
+    @JsonProperty("isReceived")
+    private Boolean isReceived=false;
+
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
         this.itemId = itemId;
@@ -81,6 +87,9 @@ public class PurchaseLog extends BaseEntity{
                 ", itemId=" + itemId +
                 ", userId=" + userId +
                 ", quantity=" + quantity +
+                ", ownerId=" + ownerId +
+                ", isSent=" + isSent +
+                ", isReceived=" + isReceived +
                 '}';
     }
 }
