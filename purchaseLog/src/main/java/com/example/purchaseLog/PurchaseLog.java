@@ -80,6 +80,22 @@ public class PurchaseLog extends BaseEntity{
         this.userId = userId;
     }
 
+    public Boolean getSent() {
+        return isSent;
+    }
+
+    public void setSent(Boolean sent) {
+        isSent = sent;
+    }
+
+    public Boolean getReceived() {
+        return isReceived;
+    }
+
+    public void setReceived(Boolean received) {
+        isReceived = received;
+    }
+
     @Override
     public String toString() {
         return "PurchaseLog{" +

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PurchaseLogService {
@@ -36,5 +37,32 @@ public class PurchaseLogService {
     }
     public List<PurchaseLog> getPurchaseLogsByOwnerId(Long ownerId){
         return purchaseLogRepository.findByOwnerId(ownerId);
+    }
+
+    public void markSentOut(Long id){
+        Optional<PurchaseLog> logToUpdate=purchaseLogRepository.findById(id);
+        if (logToUpdate.isPresent()){
+            PurchaseLog confirmedLog=logToUpdate.get();
+            confirmedLog.setSent(true);
+            purchaseLogRepository.save(confirmedLog);
+        }
+        else{
+            throw new IllegalStateException("Purchase Log id does not exist");
+        }
+    }
+
+    public void markReceived(Long id){
+        Optional<PurchaseLog> logToUpdate=purchaseLogRepository.findById(id);
+        if (logToUpdate.isPresent()){
+            PurchaseLog confirmedLog=logToUpdate.get();
+            if (confirmedLog.getSent()!=true){
+                throw new IllegalStateException("Item in purchase log has not been sent out.");
+            }
+            confirmedLog.setReceived(true);
+            purchaseLogRepository.save(confirmedLog);
+        }
+        else{
+            throw new IllegalStateException("Purchase Log id does not exist");
+        }
     }
 }

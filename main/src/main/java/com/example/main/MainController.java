@@ -78,6 +78,22 @@ public class MainController {
         message.put("message","Account successfully created and session created.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
+    @GetMapping("purchaseLog/sentOut/{id}")
+    public ResponseEntity<String> sendOutItem(@PathVariable("id") Long id){
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        String uri="http://purchaseLog-server:8082/api/purchaselog/sentOut/"+id;
+        ResponseEntity<String> response= restTemplate.getForEntity(uri,String.class);
+        return response;
+    }
+    @GetMapping("purchaseLog/received/{id}")
+    public ResponseEntity<String> receivedItem(@PathVariable("id") Long id){
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        String uri="http://purchaseLog-server:8082/api/purchaselog/received/"+id;
+        ResponseEntity<String> response= restTemplate.getForEntity(uri,String.class);
+        return response;
+    }
 
     @GetMapping(path="search/{searchItem}")
     public @ResponseBody List<Item> searchForItem(@PathVariable("searchItem")String searchItem){

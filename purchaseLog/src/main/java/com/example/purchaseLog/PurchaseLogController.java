@@ -2,6 +2,8 @@ package com.example.purchaseLog;
 
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +31,27 @@ public class PurchaseLogController {
     @GetMapping(path="{userId}")
     public List<PurchaseLog> getPurchaseLogsByUserId(@PathVariable("userId")Long userId){
         return purchaseLogService.getPurchaseLogsByUserId(userId);
+    }
+
+    @GetMapping(path="sentOut/{id}")
+    public ResponseEntity<String> markSentOut(@PathVariable("id") Long id){
+        try{
+            purchaseLogService.markSentOut(id);
+        }
+        catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Item has been updated as sent out");
+    }
+    @GetMapping(path="received/{id}")
+    public ResponseEntity<String> markReceived(@PathVariable("id") Long id){
+        try{
+            purchaseLogService.markReceived(id);
+        }
+        catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Item has been updated as received");
     }
 
     @PostMapping
