@@ -79,20 +79,24 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
     @GetMapping("purchaseLog/sentOut/{id}")
-    public ResponseEntity<String> sendOutItem(@PathVariable("id") Long id){
+    public ResponseEntity<Map<String,String>> sendOutItem(@PathVariable("id") Long id){
         RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
         RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
         String uri="http://purchaseLog-server:8082/api/purchaselog/sentOut/"+id;
         ResponseEntity<String> response= restTemplate.getForEntity(uri,String.class);
-        return response;
+        Map<String,String> message=new HashMap<>();
+        message.put("message", response.getBody());
+        return ResponseEntity.status(response.getStatusCode()).body(message);
     }
     @GetMapping("purchaseLog/received/{id}")
-    public ResponseEntity<String> receivedItem(@PathVariable("id") Long id){
+    public ResponseEntity<Map<String,String>> receivedItem(@PathVariable("id") Long id){
         RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
         RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
         String uri="http://purchaseLog-server:8082/api/purchaselog/received/"+id;
         ResponseEntity<String> response= restTemplate.getForEntity(uri,String.class);
-        return response;
+        Map<String,String> message=new HashMap<>();
+        message.put("message", response.getBody());
+        return ResponseEntity.status(response.getStatusCode()).body(message);
     }
 
     @GetMapping(path="search/{searchItem}")
@@ -148,7 +152,7 @@ public class MainController {
             User retrievedUser=restTemplate.getForObject(uri,User.class);
             Long retrievedUserId=retrievedUser.getId();
             String retrievedUserUsername=retrievedUser.getUsername();
-            saleHistory.add(new PurchaseLog(saleLogs[i].getId(),saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived()));
+            saleHistory.add(new PurchaseLog(saleLogs[i].getId(),retrievedUserId,saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived()));
         }
         return saleHistory;
     }
