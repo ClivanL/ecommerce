@@ -35,7 +35,11 @@ public class PurchaseLog {
     @JsonProperty("isReceived")
     private Boolean isReceived=false;
 
+    @JsonProperty("rating")
+    private int rating;
 
+    @JsonProperty("comments")
+    private String comments;
 
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
@@ -44,6 +48,11 @@ public class PurchaseLog {
     }
 
     public PurchaseLog() {
+    }
+
+    public PurchaseLog(int rating, String comments) {
+        this.rating = rating;
+        this.comments = comments;
     }
 
     public PurchaseLog(Long itemId, Long userId, int quantity, Long ownerId) {
@@ -116,4 +125,5 @@ public class PurchaseLog {
     public Boolean getReceived() {
         return isReceived;
     }
+
 }

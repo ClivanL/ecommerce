@@ -1,8 +1,12 @@
 package com.example.purchaseLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,5 +68,31 @@ public class PurchaseLogService {
         else{
             throw new IllegalStateException("Purchase Log id does not exist");
         }
+    }
+    @Transactional
+    public ResponseEntity<String> reviewPurchase(Long id, PurchaseLog review){
+
+        if (review.getRating()==0){
+            throw new IllegalStateException("Review must minimally have a rating");
+        }
+        Optional<PurchaseLog> purchaseLogCheck=purchaseLogRepository.findById(id);
+        if (purchaseLogCheck.isEmpty()){
+            throw new IllegalStateException("Purchase Log does not exist");
+        }
+        PurchaseLog purchaseLogPresent=purchaseLogCheck.get();
+        if (purchaseLogPresent.getReviewedAt()!=null){
+            throw new IllegalStateException("Review has already been passed");
+        }
+        else if (purchaseLogPresent.getSent()!=true){
+            throw new IllegalStateException("Item has not been sent out yet");
+        }
+        else if (purchaseLogPresent.getReceived()!=true){
+            throw new IllegalStateException("Item has not been received");
+        }
+
+        purchaseLogPresent.setRating(review.getRating());
+        purchaseLogPresent.setComments(review.getComments());
+        purchaseLogPresent.setReviewedAt(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.OK).body("Review successfully passed");
     }
 }

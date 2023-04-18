@@ -1,5 +1,6 @@
 package com.example.purchaseLog;
 
+import org.apache.coyote.Response;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,6 +62,18 @@ public class PurchaseLogController {
     @DeleteMapping(path="{purchaseLogId}")
     public void deletePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId){
         purchaseLogService.deletePurchaseLog(purchaseLogId);
+    }
+
+    @PutMapping(path="review/{id}")
+    public ResponseEntity<String> reviewPurchase(@RequestBody PurchaseLog review, @PathVariable("id")Long id){
+        ResponseEntity<String> response;
+        try{
+            response=purchaseLogService.reviewPurchase(id, review);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return response;
     }
 //    @PutMapping(path="{purchaseLogId}")
 //    public void updatePurchaseLog(@PathVariable("purchaseLogId") Long purchaseLogId, @RequestBody PurchaseLog purchaseLog){

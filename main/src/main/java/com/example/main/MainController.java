@@ -223,4 +223,17 @@ public class MainController {
         restTemplate.delete(uri);
     }
 
+    @PutMapping(path="review/{id}")
+    public ResponseEntity<Map<String,String>> reviewPurchase(@RequestBody PurchaseLog review, @PathVariable("id")Long id) {
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        String uri= "http://purchaseLog-server:8082/api/purchaselog/review/"+id;
+        HttpEntity<PurchaseLog> entity= new HttpEntity<>(review);
+        ResponseEntity<String> response=restTemplate.exchange(uri,HttpMethod.PUT,entity,String.class);
+        Map<String,String>message=new HashMap<>();
+        message.put("message",response.getBody());
+        return ResponseEntity.status(response.getStatusCode()).body(message);
+
+    }
+
 }

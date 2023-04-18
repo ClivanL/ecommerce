@@ -4,6 +4,7 @@ package com.example.purchaseLog;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="purchaselog", schema="public")
@@ -29,6 +30,15 @@ public class PurchaseLog extends BaseEntity{
     @JsonProperty("ownerId")
     private Long ownerId;
 
+    @JsonProperty("reviewedAt")
+    private LocalDateTime reviewedAt;
+
+    @JsonProperty("rating")
+    private int rating;
+
+    @JsonProperty("comments")
+    private String comments;
+
     @JsonProperty("isSent")
     private Boolean isSent=false;
 
@@ -51,6 +61,11 @@ public class PurchaseLog extends BaseEntity{
         this.userId = userId;
         this.quantity = quantity;
         this.ownerId=ownerId;
+    }
+
+    public PurchaseLog(int rating, String comments) {
+        this.rating = rating;
+        this.comments = comments;
     }
 
     public PurchaseLog() {
@@ -96,6 +111,30 @@ public class PurchaseLog extends BaseEntity{
         isReceived = received;
     }
 
+    public LocalDateTime getReviewedAt() {
+        return reviewedAt;
+    }
+
+    public void setReviewedAt(LocalDateTime reviewedAt) {
+        this.reviewedAt = reviewedAt;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "PurchaseLog{" +
@@ -104,6 +143,9 @@ public class PurchaseLog extends BaseEntity{
                 ", userId=" + userId +
                 ", quantity=" + quantity +
                 ", ownerId=" + ownerId +
+                ", reviewedAt=" + reviewedAt +
+                ", rating=" + rating +
+                ", comments='" + comments + '\'' +
                 ", isSent=" + isSent +
                 ", isReceived=" + isReceived +
                 '}';
