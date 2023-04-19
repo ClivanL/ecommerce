@@ -65,7 +65,9 @@ public class PurchaseLogController {
     }
 
     @PutMapping(path="review/{id}")
-    public ResponseEntity<String> reviewPurchase(@RequestBody PurchaseLog review, @PathVariable("id")Long id){
+    public ResponseEntity<String> reviewPurchase(@PathVariable("id")Long id, @RequestBody PurchaseLog review){
+        System.out.println("review comments"+review.getComments());
+        System.out.println("review ratings"+review.getRating());
         ResponseEntity<String> response;
         try{
             response=purchaseLogService.reviewPurchase(id, review);

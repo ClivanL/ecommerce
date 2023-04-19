@@ -41,6 +41,9 @@ public class PurchaseLog {
     @JsonProperty("comments")
     private String comments;
 
+    @JsonProperty("reviewedAt")
+    private LocalDateTime reviewedAt;
+
     public PurchaseLog(Long id, Long itemId, Long userId) {
         this.id = id;
         this.itemId = itemId;
@@ -77,7 +80,7 @@ public class PurchaseLog {
         this.item = item;
     }
 
-    public PurchaseLog(Long id, int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived) {
+    public PurchaseLog(Long id, int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived, int rating, String comments, LocalDateTime reviewedAt) {
         this.id=id;
         this.quantity = quantity;
         this.createdAt = createdAt;
@@ -85,9 +88,12 @@ public class PurchaseLog {
         this.ownerUsername = ownerUsername;
         this.isSent=isSent;
         this.isReceived=isReceived;
+        this.reviewedAt=reviewedAt;
+        this.rating=rating;
+        this.comments=comments;
     }
 
-    public PurchaseLog(Long id, Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived) {
+    public PurchaseLog(Long id, Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived, int rating, String comments, LocalDateTime reviewedAt) {
         this.id=id;
         this.userId = userId;
         this.quantity = quantity;
@@ -96,6 +102,9 @@ public class PurchaseLog {
         this.userUsername = userUsername;
         this.isSent=isSent;
         this.isReceived=isReceived;
+        this.reviewedAt=reviewedAt;
+        this.rating=rating;
+        this.comments=comments;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -126,4 +135,15 @@ public class PurchaseLog {
         return isReceived;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public LocalDateTime getReviewedAt() {
+        return reviewedAt;
+    }
 }

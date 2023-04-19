@@ -129,7 +129,7 @@ public class MainController {
             Item retrievedItem=restTemplate.getForObject(uri,Item.class);
             uri="http://user-server:8081/api/user/"+retrievedItem.getOwnerId();
             String ownerUsername=restTemplate.getForObject(uri,User.class).getUsername();
-            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getId(),purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem, ownerUsername, purchaseLogs[i].getSent(),purchaseLogs[i].getReceived()));
+            purchaseHistory.add(new PurchaseLog(purchaseLogs[i].getId(),purchaseLogs[i].getQuantity(),purchaseLogs[i].getCreatedAt(),retrievedItem, ownerUsername, purchaseLogs[i].getSent(),purchaseLogs[i].getReceived(),purchaseLogs[i].getRating(),purchaseLogs[i].getComments(),purchaseLogs[i].getReviewedAt()));
         }
         return purchaseHistory;
     }
@@ -152,7 +152,7 @@ public class MainController {
             User retrievedUser=restTemplate.getForObject(uri,User.class);
             Long retrievedUserId=retrievedUser.getId();
             String retrievedUserUsername=retrievedUser.getUsername();
-            saleHistory.add(new PurchaseLog(saleLogs[i].getId(),retrievedUserId,saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived()));
+            saleHistory.add(new PurchaseLog(saleLogs[i].getId(),retrievedUserId,saleLogs[i].getQuantity(),saleLogs[i].getCreatedAt(),retrievedItem, retrievedUserUsername, saleLogs[i].getSent(),saleLogs[i].getReceived(),saleLogs[i].getRating(),saleLogs[i].getComments(),saleLogs[i].getReviewedAt()));
         }
         return saleHistory;
     }
@@ -225,6 +225,8 @@ public class MainController {
 
     @PutMapping(path="review/{id}")
     public ResponseEntity<Map<String,String>> reviewPurchase(@RequestBody PurchaseLog review, @PathVariable("id")Long id) {
+        System.out.println("review comments"+review.getComments());
+        System.out.println("review ratings"+review.getRating());
         RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
         RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
         String uri= "http://purchaseLog-server:8082/api/purchaselog/review/"+id;
