@@ -10,7 +10,7 @@ To learn microservices- deploy on docker
 App users(basic) to be able to:
 - CRU user
 - CRUD item 
-- CR purchaseLog 
+- CRU purchaseLog(sentOut, delivered, reviews)
 - CRUD cart 
 
 App users(superuser)
@@ -20,11 +20,9 @@ App users(superuser)
 - CRUD cart
 
 ### to implement
-- JWT for session management (in progress)
+- JWT for session management (non logged in users to be able to use non user features)
 - account password change in app
 - frontend validation, show that current quantity in cart is too much. insufficient quantity
-- confirmation of receipt and delivery by users (buyer & seller)
-- giving reviews by buyer
 - drawing of data for benefit of buyers'/sellers' 
 
 ### progress
@@ -34,8 +32,8 @@ App users(superuser)
 - Communication with front end  (CORS error)
 - Setting up session creation, validation and invalidation
 - Error handling, throwing and handling errors 
+- Session authentication and validation with Jwt, springboot security (authorisation required, jwt token stored in Session Cookie)
 - Meet requirements set (in progress)
-- Session authentication and validation with Jwt, springboot security (in progress)
 
 #### Steps
 https://www.baeldung.com/dockerizing-spring-boot-application
