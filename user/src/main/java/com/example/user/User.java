@@ -46,6 +46,10 @@ public class User {
         this.password = password;
     }
 
+    public User(String password) {
+        this.password = password;
+    }
+
     public User(Long id, String username, String password, String name, String email) {
         this.id = id;
         this.username = username;

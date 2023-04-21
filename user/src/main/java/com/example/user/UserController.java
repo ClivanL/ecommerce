@@ -5,6 +5,7 @@ import com.example.user.data.Sess;
 import com.example.user.mapstruct.mappers.MapStructMapper;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +75,19 @@ public class UserController {
 //            }
 //        }
 //    }
+
+    @PostMapping(path="changePassword/{userId}")
+    public ResponseEntity<String> changePassword(@PathVariable("userId") Long userId, @RequestBody User user){
+
+        ResponseEntity<String> response;
+        try{
+            response=userService.changePassword(userId, user.getPassword());
+        }
+        catch (Exception e) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return response;
+    }
 
     @GetMapping(path="username/{username}")
     public User getUserFromUsername(@PathVariable("username")String username){

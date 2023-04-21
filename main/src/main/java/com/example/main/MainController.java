@@ -59,6 +59,18 @@ public class MainController {
         return main;
     }
 
+    @PostMapping("changePassword")
+    public ResponseEntity<Map<String,String>> changePassword(@RequestBody User userPassword, HttpServletRequest request){
+        Map<String,String> sendBack= new HashMap<>();
+        Long userId=(Long)request.getSession().getAttribute("userId");
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate= restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        String uri = "http://user-server:8081/api/user/changePassword/"+userId;
+        ResponseEntity<String> response= restTemplate.postForEntity(uri, new HttpEntity<User>(userPassword), String.class);
+        sendBack.put("message",response.getBody());
+        return ResponseEntity.status(response.getStatusCode()).body(sendBack);
+    }
+
     @PostMapping("newAccount")
     public ResponseEntity<Map<String,String>> createNewAccount(@RequestBody User user, HttpServletRequest request){
         RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();

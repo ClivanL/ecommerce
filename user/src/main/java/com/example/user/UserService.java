@@ -1,6 +1,8 @@
 package com.example.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +35,23 @@ public class UserService{
         return userRepository.findAll();
     }
 
+    @Transactional
+    public ResponseEntity<String> changePassword(Long userId, String password){
+        Optional<User> findUser = userRepository.findById(userId);
+        if (findUser.isEmpty()){
+            throw new IllegalStateException("User does not exist");
+        }
+        else{
+            User foundUser=findUser.get();
+            String existingPassword= foundUser.getPassword();
+            if (passwordEncoder.matches(password, existingPassword)){
+                throw new IllegalStateException("Password same as existing password");
+            }
+            foundUser.setPassword(passwordEncoder.encode(password));
+            userRepository.save(foundUser);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Password successfully changed");
+    }
     public void createUser(User user) {
         Optional<User> userOptionalUsername= userRepository.findByUsername(user.getUsername());
         Optional<User> userOptionalEmail= userRepository.findByEmail(user.getEmail());
