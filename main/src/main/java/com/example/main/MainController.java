@@ -199,6 +199,9 @@ public class MainController {
         if (session==null) {
             throw new IllegalStateException("You are not logged in.");
         }
+        if (cart.getQuantity()<=0){
+            throw new IllegalStateException("Quantity cannot be 0 or less");
+        }
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://cart-server:8083/api/cart";
         return restTemplate.postForObject(uri, cart, Cart.class);
