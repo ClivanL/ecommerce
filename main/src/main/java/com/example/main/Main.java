@@ -29,6 +29,9 @@ public class Main {
     @JsonProperty("listedItems")
     private List<Item> listedItems;
 
+    @JsonProperty("fulfillableCart")
+    private Boolean fulfillableCart=true;
+
     public Main() {
     }
 
@@ -46,6 +49,16 @@ public class Main {
         this.email = email;
         this.cartItems = cartItems;
         this.listedItems=listedItems;
+    }
+
+    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems, Boolean fulfillableCart) {
+        this.userId = userId;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.cartItems = cartItems;
+        this.listedItems = listedItems;
+        this.fulfillableCart = fulfillableCart;
     }
 
     public Main(Main that) {

@@ -46,16 +46,30 @@ public class MainController {
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
         Cart[] response=restTemplate.getForObject(uri2, Cart[].class);
         Cart[] newResponse=new Cart[response.length];
+        Boolean fulfillableCart=true;
         for (int i=0;i<response.length;i++){
             String uriForItem="http://item-server:8080/api/item/"+response[i].getItemId();
             Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
-            newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse);
+            if (response[i].getQuantity()> itemResponse.getQuantity()){
+                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse,false);
+                fulfillableCart=false;
+            }
+            else{
+                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse);
+            }
+
         }
         List<Cart> carts= Arrays.asList(newResponse);
         final String uri3="http://item-server:8080/api/item/user/"+userId;
         Item[] listedItemsResponse=restTemplate.getForObject(uri3, Item[].class);
         List<Item>listedItems=Arrays.asList(listedItemsResponse);
-        Main main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems);
+        Main main;
+        if (fulfillableCart!=true){
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false);
+        }
+        else{
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems);
+        }
         return main;
     }
 

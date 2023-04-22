@@ -21,6 +21,9 @@ public class Cart {
     @JsonProperty("item")
     private Item item;
 
+    @JsonProperty("sufficient")
+    private Boolean sufficient=true;
+
     public Cart() {
     }
 
@@ -44,6 +47,13 @@ public class Cart {
         this.id = id;
         this.quantity = quantity;
         this.item = item;
+    }
+
+    public Cart(Long id, int quantity, Item item, Boolean sufficient) {
+        this.id = id;
+        this.quantity = quantity;
+        this.item = item;
+        this.sufficient = sufficient;
     }
 
     public Long getId() {
