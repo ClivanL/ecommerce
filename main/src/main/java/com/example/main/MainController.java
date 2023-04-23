@@ -139,7 +139,7 @@ public class MainController {
         PurchaseLog[] purchaseLogs=restTemplate.getForObject(uri, PurchaseLog[].class);
         uri="http://item-server:8080/api/item/"+id;
         Item item=restTemplate.getForObject(uri,Item.class);
-        return new Item(item.getId(),item.getItemName(), item.getPrice(),item.getDescription(),item.getImageUrl(),item.getQuantity(),item.getCategory(),item.getOwnerId(), purchaseLogs);
+        return new Item(item.getId(),item.getItemName(), item.getPrice(),item.getDescription(),item.getImageUrl(),item.getQuantity(),item.getCategory(),item.getOwnerId(), item.getRating(), purchaseLogs);
     }
 
     @GetMapping("retrieveTransactionHistory")

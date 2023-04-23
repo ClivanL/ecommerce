@@ -34,6 +34,9 @@ public class Item implements Serializable {
     @JsonProperty("reviews")
     private PurchaseLog[] reviews;
 
+    @JsonProperty("rating")
+    private Long rating;
+
     public Item() {
     }
 
@@ -63,7 +66,7 @@ public class Item implements Serializable {
         this.quantity = quantity;
     }
 
-    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId, PurchaseLog[] reviews) {
+    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId, Long rating, PurchaseLog[] reviews) {
         this.id = id;
         this.itemName = itemName;
         this.price = price;
@@ -72,6 +75,7 @@ public class Item implements Serializable {
         this.quantity = quantity;
         this.category = category;
         this.ownerId = ownerId;
+        this.rating=rating;
         this.reviews = reviews;
     }
 
@@ -137,6 +141,10 @@ public class Item implements Serializable {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public Long getRating() {
+        return rating;
     }
 
     @Override
