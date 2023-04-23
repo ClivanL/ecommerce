@@ -1,9 +1,12 @@
 package com.example.purchaseLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -97,6 +100,14 @@ public class PurchaseLogService {
         purchaseLogPresent.setRating(review.getRating());
         purchaseLogPresent.setComments(review.getComments());
         purchaseLogPresent.setReviewedAt(LocalDateTime.now());
+
+        RestTemplate restTemplate= new RestTemplate();
+        String uri="http://item-server:8080/api/item/averageRatings/"+purchaseLogPresent.getItemId();
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, new HttpEntity<>(new PurchaseLog(review.getRating())),String.class);
+        System.out.println(response.getStatusCodeValue());
+        if (response.getStatusCodeValue()!=200){
+            throw new IllegalStateException("Failed to update reviews in item");
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Review successfully passed");
     }
 }

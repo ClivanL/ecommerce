@@ -34,7 +34,7 @@ public class PurchaseLog extends BaseEntity{
     private LocalDateTime reviewedAt;
 
     @JsonProperty("rating")
-    private int rating;
+    private Long rating;
 
     @JsonProperty("comments")
     private String comments;
@@ -63,9 +63,13 @@ public class PurchaseLog extends BaseEntity{
         this.ownerId=ownerId;
     }
 
-    public PurchaseLog(int rating, String comments) {
+    public PurchaseLog(Long rating, String comments) {
         this.rating = rating;
         this.comments = comments;
+    }
+
+    public PurchaseLog(Long rating) {
+        this.rating = rating;
     }
 
     public PurchaseLog() {
@@ -119,11 +123,11 @@ public class PurchaseLog extends BaseEntity{
         this.reviewedAt = reviewedAt;
     }
 
-    public int getRating() {
+    public Long getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Long rating) {
         this.rating = rating;
     }
 

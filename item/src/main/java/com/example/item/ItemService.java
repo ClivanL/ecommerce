@@ -105,4 +105,25 @@ public class ItemService {
         }
         presentItem.setQuantity(item.getQuantity());
     }
+
+    @Transactional
+    public void updateAverageRatings(Long itemId, Long rating){
+        System.out.println(itemId);
+        System.out.println(rating);
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            System.out.println("found item");
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+        int currentHits=presentItem.getHits();
+        int newHits=currentHits+1;
+        presentItem.setHits(newHits);
+        presentItem.setRating((presentItem.getRating()*currentHits+rating)/newHits);
+
+        itemRepository.save(presentItem);
+    }
 }

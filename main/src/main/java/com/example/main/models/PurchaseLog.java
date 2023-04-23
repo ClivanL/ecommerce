@@ -36,7 +36,7 @@ public class PurchaseLog {
     private Boolean isReceived=false;
 
     @JsonProperty("rating")
-    private int rating;
+    private Long rating;
 
     @JsonProperty("comments")
     private String comments;
@@ -53,7 +53,7 @@ public class PurchaseLog {
     public PurchaseLog() {
     }
 
-    public PurchaseLog(int rating, String comments) {
+    public PurchaseLog(Long rating, String comments) {
         this.rating = rating;
         this.comments = comments;
     }
@@ -80,7 +80,7 @@ public class PurchaseLog {
         this.item = item;
     }
 
-    public PurchaseLog(Long id, int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived, int rating, String comments, LocalDateTime reviewedAt) {
+    public PurchaseLog(Long id, int quantity, LocalDateTime createdAt, Item item, String ownerUsername, Boolean isSent, Boolean isReceived, Long rating, String comments, LocalDateTime reviewedAt) {
         this.id=id;
         this.quantity = quantity;
         this.createdAt = createdAt;
@@ -93,7 +93,7 @@ public class PurchaseLog {
         this.comments=comments;
     }
 
-    public PurchaseLog(Long id, Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived, int rating, String comments, LocalDateTime reviewedAt) {
+    public PurchaseLog(Long id, Long userId, int quantity, LocalDateTime createdAt, Item item, String userUsername, Boolean isSent, Boolean isReceived, Long rating, String comments, LocalDateTime reviewedAt) {
         this.id=id;
         this.userId = userId;
         this.quantity = quantity;
@@ -135,7 +135,7 @@ public class PurchaseLog {
         return isReceived;
     }
 
-    public int getRating() {
+    public Long getRating() {
         return rating;
     }
 

@@ -1,6 +1,7 @@
 package com.example.item;
 
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,5 +89,18 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("quantity changed");
     }
 
+    //from purchaseLog module
+    @PostMapping("averageRatings/{itemId}")
+    public ResponseEntity<?> updateAverageRatings(@PathVariable("itemId") Long itemId, @RequestBody Review review){
+        System.out.println(itemId);
+        System.out.println(review.getRating());
+        try{
+            itemService.updateAverageRatings(itemId, review.getRating());
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Average ratings set");
+    }
 }
 
