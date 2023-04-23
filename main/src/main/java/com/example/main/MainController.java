@@ -5,6 +5,7 @@ import com.example.main.Sess.SessController;
 import com.example.main.errorHandler.RestTemplateResponseErrorHandler;
 import com.example.main.models.*;
 import org.apache.coyote.Response;
+import org.apache.logging.log4j.LogManager;
 import org.hibernate.transform.CacheableResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -17,11 +18,14 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.lang.reflect.Array;
 import java.util.*;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 
 @RestController
 @RequestMapping(path="/api/main")
 @CrossOrigin(origins="http://localhost:5173")
 public class MainController {
+    private static final Logger LOGGER = LogManager.getLogger(MainController.class.getName());
     private final MainService mainService;
     private final SessController sessController;
 
@@ -35,6 +39,7 @@ public class MainController {
 
     @PostMapping("retrieveAccountDetails")
     public @ResponseBody Main getMainDetails(HttpServletRequest request){
+        LOGGER.info("retrieving account details");
         HttpSession session=request.getSession(false);
         if (session==null) {
             throw new IllegalStateException("You are not logged in.");
