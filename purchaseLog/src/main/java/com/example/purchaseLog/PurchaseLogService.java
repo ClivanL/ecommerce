@@ -43,6 +43,10 @@ public class PurchaseLogService {
         return purchaseLogRepository.findByOwnerId(ownerId);
     }
 
+    public List<PurchaseLog> getPurchaseLogsByItemId(Long itemId){
+        return purchaseLogRepository.findByItemId(itemId);
+    }
+
     public void markSentOut(Long id){
         Optional<PurchaseLog> logToUpdate=purchaseLogRepository.findById(id);
         if (logToUpdate.isPresent()){

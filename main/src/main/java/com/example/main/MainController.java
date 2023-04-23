@@ -135,8 +135,11 @@ public class MainController {
     @GetMapping(path="item/id/{id}")
     public @ResponseBody Item searchForItemById(@PathVariable("id") Long id){
         RestTemplate restTemplate=new RestTemplate();
-        String uri="http://item-server:8080/api/item/"+id;
-        return restTemplate.getForObject(uri,Item.class);
+        String uri="http://purchaseLog-server:8082/api/purchaselog/review/"+id;
+        PurchaseLog[] purchaseLogs=restTemplate.getForObject(uri, PurchaseLog[].class);
+        uri="http://item-server:8080/api/item/"+id;
+        Item item=restTemplate.getForObject(uri,Item.class);
+        return new Item(item.getId(),item.getItemName(), item.getPrice(),item.getDescription(),item.getImageUrl(),item.getQuantity(),item.getCategory(),item.getOwnerId(), purchaseLogs);
     }
 
     @GetMapping("retrieveTransactionHistory")

@@ -34,6 +34,11 @@ public class PurchaseLogController {
         return purchaseLogService.getPurchaseLogsByUserId(userId);
     }
 
+    @GetMapping(path="review/{itemId}")
+    public List<PurchaseLog> getPurchaseLogsByItemId(@PathVariable("itemId") Long itemId){
+        return purchaseLogService.getPurchaseLogsByItemId(itemId);
+    }
+
     @GetMapping(path="sentOut/{id}")
     public ResponseEntity<String> markSentOut(@PathVariable("id") Long id){
         try{
