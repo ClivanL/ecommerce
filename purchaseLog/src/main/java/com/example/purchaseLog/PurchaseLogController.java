@@ -34,9 +34,9 @@ public class PurchaseLogController {
         return purchaseLogService.getPurchaseLogsByUserId(userId);
     }
 
-    @GetMapping(path="review/{itemId}")
-    public List<PurchaseLog> getPurchaseLogsByItemId(@PathVariable("itemId") Long itemId){
-        return purchaseLogService.getPurchaseLogsByItemId(itemId);
+    @GetMapping(path="review/{itemId}/{rating}")
+    public List<PurchaseLog> getPurchaseLogsByItemIdAndRating(@PathVariable("itemId") Long itemId, @PathVariable("rating") String rating){
+        return purchaseLogService.getPurchaseLogsByItemIdAndRating(itemId, rating);
     }
 
     @GetMapping(path="sentOut/{id}")

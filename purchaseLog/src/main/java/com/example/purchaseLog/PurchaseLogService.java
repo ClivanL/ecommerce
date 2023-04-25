@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +47,24 @@ public class PurchaseLogService {
         return purchaseLogRepository.findByOwnerId(ownerId);
     }
 
-    public List<PurchaseLog> getPurchaseLogsByItemId(Long itemId){
-        return purchaseLogRepository.findByItemId(itemId);
+    public List<PurchaseLog> getPurchaseLogsByItemIdAndRating(Long itemId, String rating){
+        List<PurchaseLog> results=new ArrayList<>();
+        if (rating.equals("all")){
+            System.out.println("finding all");
+            Optional<List<PurchaseLog>> findings= purchaseLogRepository.findByItemId(itemId);
+            if (findings.isPresent()){
+                results=findings.get();
+            }
+        }
+        else {
+            System.out.println("finding reviews with "+rating+" rating");
+            Long numericRating=Long.parseLong(rating);
+            Optional<List<PurchaseLog>> findings= purchaseLogRepository.findByItemIdAndRating(itemId,numericRating);
+            if (findings.isPresent()){
+                results=findings.get();
+            }
+        }
+        return results;
     }
 
     public void markSentOut(Long id){
