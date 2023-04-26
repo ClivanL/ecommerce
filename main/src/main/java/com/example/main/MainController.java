@@ -132,12 +132,12 @@ public class MainController {
         List<Item> results= Arrays.asList(restTemplate.getForObject(uri,Item[].class));
         return results;
     }
-    @GetMapping(path="item/id/{id}/{rating}")
-    public @ResponseBody Item searchForItemById(@PathVariable("id") Long id, @PathVariable("rating") String rating){
+    @GetMapping(path="item/id/{id}/{filter}")
+    public @ResponseBody Item searchForItemById(@PathVariable("id") Long id, @PathVariable("filter") String filter){
 
         //System.out.println(Long.parseLong(rating));
         RestTemplate restTemplate=new RestTemplate();
-        String uri="http://purchaseLog-server:8082/api/purchaselog/review/"+id+"/"+rating;
+        String uri="http://purchaseLog-server:8082/api/purchaselog/review/"+id+"/"+filter;
         System.out.println(uri);
         PurchaseLog[] purchaseLogs=restTemplate.getForObject(uri, PurchaseLog[].class);
         uri="http://item-server:8080/api/item/"+id;

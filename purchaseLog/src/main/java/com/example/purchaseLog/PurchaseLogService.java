@@ -47,22 +47,28 @@ public class PurchaseLogService {
         return purchaseLogRepository.findByOwnerId(ownerId);
     }
 
-    public List<PurchaseLog> getPurchaseLogsByItemIdAndRating(Long itemId, String rating){
+    public List<PurchaseLog> getPurchaseLogsByItemIdAndFilter(Long itemId, String filter){
         List<PurchaseLog> results=new ArrayList<>();
-        if (rating.equals("all")){
-            System.out.println("finding all");
-            Optional<List<PurchaseLog>> findings= purchaseLogRepository.findByItemId(itemId);
-            if (findings.isPresent()){
-                results=findings.get();
-            }
+        Optional<List<PurchaseLog>> findings;
+        if (filter.equals("recent")){
+            System.out.println("finding recent");
+            findings= purchaseLogRepository.findByItemId(itemId);
+        }
+        else if (filter.equals("critical")){
+            System.out.println("finding most critical");
+            findings= purchaseLogRepository.findByItemIdCritical(itemId);
+        }
+        else if (filter.equals("helpful")){
+            System.out.println("finding most helpful");
+            findings= purchaseLogRepository.findByItemIdHelpful(itemId);
         }
         else {
-            System.out.println("finding reviews with "+rating+" rating");
-            Long numericRating=Long.parseLong(rating);
-            Optional<List<PurchaseLog>> findings= purchaseLogRepository.findByItemIdAndRating(itemId,numericRating);
-            if (findings.isPresent()){
-                results=findings.get();
-            }
+            System.out.println("finding reviews with "+filter+" rating");
+            Long numericRating=Long.parseLong(filter);
+            findings= purchaseLogRepository.findByItemIdAndRating(itemId,numericRating);
+        }
+        if (findings.isPresent()){
+            results=findings.get();
         }
         return results;
     }

@@ -16,4 +16,10 @@ public interface PurchaseLogRepository extends JpaRepository<PurchaseLog,Long> {
 
     @Query(value="SELECT p FROM PurchaseLog p WHERE p.itemId=?1 and p.rating=?2 ORDER BY reviewedAt")
     Optional<List<PurchaseLog>> findByItemIdAndRating(Long itemId, Long rating);
+
+    @Query(value="SELECT p FROM PurchaseLog p WHERE p.itemId=?1 and p.reviewedAt IS NOT NULL ORDER BY rating ASC")
+    Optional<List<PurchaseLog>> findByItemIdCritical(Long itemId);
+
+    @Query(value="SELECT p FROM PurchaseLog p WHERE p.itemId=?1 and p.reviewedAt IS NOT NULL ORDER BY rating DESC")
+    Optional<List<PurchaseLog>> findByItemIdHelpful(Long itemId);
 }
