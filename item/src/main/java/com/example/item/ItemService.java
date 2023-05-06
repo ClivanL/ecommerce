@@ -107,7 +107,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void updateAverageRatings(Long itemId, Long rating){
+    public void updateAverageRatings(Long itemId, float rating){
         System.out.println(itemId);
         System.out.println(rating);
         Optional <Item> itemData= itemRepository.findById(itemId);
@@ -121,8 +121,10 @@ public class ItemService {
         }
         int currentHits=presentItem.getHits();
         int newHits=currentHits+1;
+        System.out.println(presentItem.toString());
         presentItem.setHits(newHits);
         presentItem.setRating((presentItem.getRating()*currentHits+rating)/newHits);
+        System.out.println(presentItem.toString());
 
         itemRepository.save(presentItem);
     }

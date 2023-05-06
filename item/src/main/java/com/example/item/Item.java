@@ -40,7 +40,7 @@ public class Item implements Serializable {
     private Long ownerId;
 
     @JsonProperty("rating")
-    private Long rating=0L;
+    private float rating=0;
 
     @JsonProperty("hits")
     private int hits=0;
@@ -139,7 +139,7 @@ public class Item implements Serializable {
         this.ownerId = ownerId;
     }
 
-    public Long getRating() {
+    public float getRating() {
         return rating;
     }
 
@@ -147,7 +147,7 @@ public class Item implements Serializable {
         return hits;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -166,6 +166,8 @@ public class Item implements Serializable {
                 ", quantity=" + quantity +
                 ", category='" + category + '\'' +
                 ", ownerId=" + ownerId +
+                ", rating=" + rating +
+                ", hits=" + hits +
                 '}';
     }
 }
