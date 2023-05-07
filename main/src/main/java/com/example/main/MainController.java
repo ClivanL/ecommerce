@@ -273,4 +273,14 @@ public class MainController {
 
     }
 
+    @PostMapping(path="favourite")
+    public ResponseEntity<Map<String,String>> setLikeItem (@RequestBody Favourite favourite){
+        RestTemplate restTemplate=new RestTemplate();
+        String uri="http://favourite-server:8085/api/favourite";
+        ResponseEntity<String> response= restTemplate.postForEntity(uri,favourite,String.class);
+        Map<String,String> respond=new HashMap<>();
+        respond.put("message",response.getBody());
+        return ResponseEntity.status(HttpStatus.OK).body(respond);
+    }
+
 }
