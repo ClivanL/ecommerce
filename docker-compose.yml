@@ -52,6 +52,16 @@ services:
             - 15555:8084
         networks:
             - spring-cloud-network
+    favourite-server:
+        container_name: favourite-server
+        build:
+            context: favourite
+            dockerfile: Dockerfile
+        image: favourite-server:latest
+        ports:
+            - 14444:8085
+        networks:
+            - spring-cloud-network
 networks:
     spring-cloud-network:
         driver: bridge
