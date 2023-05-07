@@ -9,8 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface PurchaseLogRepository extends JpaRepository<PurchaseLog,Long> {
+    @Query(value="SELECT p FROM PurchaseLog p WHERE p.userId=?1 ORDER BY createdAt,id")
     List<PurchaseLog> findByUserId(Long userId);
+    @Query(value="SELECT p FROM PurchaseLog p WHERE p.ownerId=?1 ORDER BY createdAt,id")
     List<PurchaseLog> findByOwnerId(Long ownerId);
+
     @Query(value="SELECT p FROM PurchaseLog p WHERE p.itemId=?1 and p.reviewedAt IS NOT NULL ORDER BY reviewedAt")
     Optional<List<PurchaseLog>> findByItemId(Long itemId);
 
