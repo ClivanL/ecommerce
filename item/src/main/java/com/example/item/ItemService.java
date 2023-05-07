@@ -128,4 +128,22 @@ public class ItemService {
 
         itemRepository.save(presentItem);
     }
+
+    @Transactional
+    public void updateItemFavouriteCount(String action, Long itemId) throws Exception {
+        Optional<Item> findItem=itemRepository.findById(itemId);
+        if (findItem.isEmpty()){
+            throw new Exception("Item does not exist");
+        }
+        else {
+            Item item=findItem.get();
+            if (action.equals("like")) {
+                item.setLikes(item.getLikes()+1);
+            }
+            else{
+                item.setLikes(item.getLikes()-1);
+            }
+            itemRepository.save(item);
+        }
+    }
 }

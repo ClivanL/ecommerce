@@ -45,6 +45,9 @@ public class Item implements Serializable {
     @JsonProperty("hits")
     private int hits=0;
 
+    @JsonProperty("likes")
+    private int likes=0;
+
 
     public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId) {
         this.id = id;
@@ -153,6 +156,14 @@ public class Item implements Serializable {
 
     public void setHits(int hits) {
         this.hits = hits;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     @Override

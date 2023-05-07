@@ -37,6 +37,9 @@ public class Item implements Serializable {
     @JsonProperty("rating")
     private float rating;
 
+    @JsonProperty("likes")
+    private int likes;
+
     public Item() {
     }
 

@@ -25,8 +25,13 @@ public class FavouriteController {
     }
     @PostMapping
     public ResponseEntity<String> setFavourite(@RequestBody Favourite favourite){
-        ResponseEntity<String> response=favouriteService.setFavourite(favourite);
-        return ResponseEntity.status(HttpStatus.OK).body(response.getBody());
+        try {
+            ResponseEntity<String> response = favouriteService.setFavourite(favourite);
+            return ResponseEntity.status(HttpStatus.OK).body(response.getBody());
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("{userId}")

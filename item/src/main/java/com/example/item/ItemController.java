@@ -102,5 +102,17 @@ public class ItemController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("Average ratings set");
     }
+
+    //from favourite module
+    @GetMapping("{action}/{itemId}")
+    public ResponseEntity<String> updateItemFavouriteCount(@PathVariable("action")String action, @PathVariable("itemId")Long itemId){
+        try{
+            itemService.updateItemFavouriteCount(action, itemId);
+            return ResponseEntity.status(HttpStatus.OK).body("item liked");
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }
 

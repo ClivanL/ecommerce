@@ -283,7 +283,7 @@ public class MainController {
         ResponseEntity<String> response= restTemplate.postForEntity(uri,favourite,String.class);
         Map<String,String> respond=new HashMap<>();
         respond.put("message",response.getBody());
-        return ResponseEntity.status(HttpStatus.OK).body(respond);
+        return ResponseEntity.status(response.getStatusCode()).body(respond);
     }
 
 }
