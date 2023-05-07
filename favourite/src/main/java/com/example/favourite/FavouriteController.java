@@ -28,4 +28,9 @@ public class FavouriteController {
         ResponseEntity<String> response=favouriteService.setFavourite(favourite);
         return ResponseEntity.status(HttpStatus.OK).body(response.getBody());
     }
+
+    @GetMapping("{userId}")
+    public List<Favourite> getFavouritesByUserId(@PathVariable("userId")Long userId){
+        return favouriteService.getFavouritesByUserId(userId);
+    }
 }

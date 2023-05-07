@@ -33,4 +33,7 @@ public class FavouriteService {
         }
         return ResponseEntity.ok(outcome);
     }
+    public List<Favourite>getFavouritesByUserId(Long userId){
+        return favouriteRepository.findByUserId(userId);
+    }
 }

@@ -63,12 +63,15 @@ public class MainController {
         final String uri3="http://item-server:8080/api/item/user/"+userId;
         Item[] listedItemsResponse=restTemplate.getForObject(uri3, Item[].class);
         List<Item>listedItems=Arrays.asList(listedItemsResponse);
+        final String uri4="http://favourite-server:8085/api/favourite/"+userId;
+        Favourite[] userFavouritesArr=restTemplate.getForObject(uri4,Favourite[].class);
+        List<Favourite>userFavourites=Arrays.asList(userFavouritesArr);
         Main main;
         if (fulfillableCart!=true){
-            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false);
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false, userFavourites);
         }
         else{
-            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems);
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems,true, userFavourites);
         }
         return main;
     }

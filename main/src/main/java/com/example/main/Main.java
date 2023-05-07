@@ -2,6 +2,7 @@ package com.example.main;
 
 
 import com.example.main.models.Cart;
+import com.example.main.models.Favourite;
 import com.example.main.models.Item;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,6 +33,9 @@ public class Main {
     @JsonProperty("fulfillableCart")
     private Boolean fulfillableCart=true;
 
+    @JsonProperty("favourites")
+    private List<Favourite> favourites;
+
     public Main() {
     }
 
@@ -51,7 +55,7 @@ public class Main {
         this.listedItems=listedItems;
     }
 
-    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems, Boolean fulfillableCart) {
+    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems, Boolean fulfillableCart, List<Favourite> favourites) {
         this.userId = userId;
         this.username = username;
         this.name = name;
@@ -59,6 +63,7 @@ public class Main {
         this.cartItems = cartItems;
         this.listedItems = listedItems;
         this.fulfillableCart = fulfillableCart;
+        this.favourites=favourites;
     }
 
     public Main(Main that) {
