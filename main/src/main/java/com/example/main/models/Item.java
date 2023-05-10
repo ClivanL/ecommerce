@@ -69,7 +69,7 @@ public class Item implements Serializable {
         this.quantity = quantity;
     }
 
-    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId, float rating, PurchaseLog[] reviews) {
+    public Item(Long id, String itemName, Double price, String description, String imageUrl, int quantity, String category, Long ownerId, float rating, int likes, PurchaseLog[] reviews) {
         this.id = id;
         this.itemName = itemName;
         this.price = price;
@@ -80,6 +80,7 @@ public class Item implements Serializable {
         this.ownerId = ownerId;
         this.rating=rating;
         this.reviews = reviews;
+        this.likes=likes;
     }
 
     public Long getId() {
@@ -148,6 +149,10 @@ public class Item implements Serializable {
 
     public float getRating() {
         return rating;
+    }
+
+    public int getLikes() {
+        return likes;
     }
 
     @Override
