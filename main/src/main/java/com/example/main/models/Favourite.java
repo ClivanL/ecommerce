@@ -1,17 +1,25 @@
 package com.example.main.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Favourite {
 
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("userId")
     private Long userId;
+    @JsonProperty("itemId")
     private Long itemId;
+    @JsonProperty("item")
+    private Item item;
 
     public Favourite() {
     }
 
-    public Favourite(Long userId, Long itemId) {
+    public Favourite(Long userId, Long itemId, Item item) {
         this.userId = userId;
         this.itemId = itemId;
+        this.item=item;
     }
 
     public Long getId() {

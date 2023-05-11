@@ -65,7 +65,15 @@ public class MainController {
         List<Item>listedItems=Arrays.asList(listedItemsResponse);
         final String uri4="http://favourite-server:8085/api/favourite/"+userId;
         Favourite[] userFavouritesArr=restTemplate.getForObject(uri4,Favourite[].class);
-        List<Favourite>userFavourites=Arrays.asList(userFavouritesArr);
+        List<Favourite> userFavourites= new ArrayList<>();
+        for (int i=0;i<userFavouritesArr.length;i++){
+            String uriForItem="http://item-server:8080/api/item/"+userFavouritesArr[i].getItemId();
+            Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
+            System.out.println(itemResponse.toString());
+            userFavourites.add(new Favourite(userFavouritesArr[i].getUserId(), userFavouritesArr[i].getItemId(),itemResponse));
+        }
+        System.out.println(userFavourites);
+        //List<Favourite>userFavourites=Arrays.asList(userFavouritesArr);
         Main main;
         if (fulfillableCart!=true){
             main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false, userFavourites);
