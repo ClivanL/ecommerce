@@ -89,9 +89,10 @@ public class UserController {
         return response;
     }
 
+    //added conversion to DTO to mask password, endpoint used for JWT loadUserByUsername
     @GetMapping(path="username/{username}")
-    public User getUserFromUsername(@PathVariable("username")String username){
-        return userRepository.findByUsername(username).get();
+    public UserDTO getUserFromUsername(@PathVariable("username")String username){
+        return mapStructMapper.userToUserDTO(userRepository.findByUsername(username).get());
     }
 
     @GetMapping(path="{userId}")

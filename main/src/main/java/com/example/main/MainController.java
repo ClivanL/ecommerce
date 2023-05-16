@@ -76,10 +76,10 @@ public class MainController {
         //List<Favourite>userFavourites=Arrays.asList(userFavouritesArr);
         Main main;
         if (fulfillableCart!=true){
-            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false, userFavourites);
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems, false, userFavourites, verifiedUser.getBalance());
         }
         else{
-            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems,true, userFavourites);
+            main= new Main(verifiedUser.getId(),verifiedUser.getUsername(),verifiedUser.getName(),verifiedUser.getEmail(),carts,listedItems,true, userFavourites, verifiedUser.getBalance());
         }
         return main;
     }
@@ -228,7 +228,7 @@ public class MainController {
     public Main checkOutCart(@RequestBody Main main){
         List<Cart> cartItems=main.getCartItems();
         mainService.updateMain(cartItems, main.getUserId());
-    System.out.println("you're here");
+    //System.out.println("you're here");
         List<Cart>emptyCart= new ArrayList<>();
         Main mainCopy= new Main(main);
         mainCopy.setCartItems(emptyCart);

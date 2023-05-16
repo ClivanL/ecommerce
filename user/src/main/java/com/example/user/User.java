@@ -38,6 +38,9 @@ public class User {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("balance")
+    private float balance=0;
+
     public User() {
     }
 
@@ -58,11 +61,12 @@ public class User {
         this.email = email;
     }
 
-    public User(String username, String password, String name, String email) {
+    public User(String username, String password, String name, String email, float balance) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
+        this.balance=balance;
     }
     public Long getId() {
         return id;

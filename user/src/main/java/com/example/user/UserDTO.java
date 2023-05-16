@@ -17,14 +17,18 @@ public class UserDTO {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("balance")
+    private float balance;
+
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String username, String email, String name) {
+    public UserDTO(Long id, String username, String email, String name, float balance) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.name = name;
+        this.balance=balance;
     }
 
     public UserDTO(String username, String email, String name) {

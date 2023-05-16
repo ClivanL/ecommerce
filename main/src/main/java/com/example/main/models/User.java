@@ -25,6 +25,9 @@ public class User implements UserDetails{
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("balance")
+    private float balance;
+
     private List<GrantedAuthority> authorities;
 
     public User(User newUser){
@@ -53,6 +56,14 @@ public class User implements UserDetails{
         this.password = password;
         this.name = name;
         this.email = email;
+    }
+
+    public User(Long id, String username, String name, String email, float balance) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.balance = balance;
     }
 
     public User(String password) {
@@ -107,6 +118,10 @@ public class User implements UserDetails{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public float getBalance() {
+        return balance;
     }
 
     @Override

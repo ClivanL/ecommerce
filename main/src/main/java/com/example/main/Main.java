@@ -36,6 +36,9 @@ public class Main {
     @JsonProperty("favourites")
     private List<Favourite> favourites;
 
+    @JsonProperty("balance")
+    private float balance;
+
     public Main() {
     }
 
@@ -55,7 +58,7 @@ public class Main {
         this.listedItems=listedItems;
     }
 
-    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems, Boolean fulfillableCart, List<Favourite> favourites) {
+    public Main(Long userId, String username, String name, String email, List<Cart> cartItems, List<Item> listedItems, Boolean fulfillableCart, List<Favourite> favourites, float balance) {
         this.userId = userId;
         this.username = username;
         this.name = name;
@@ -64,6 +67,7 @@ public class Main {
         this.listedItems = listedItems;
         this.fulfillableCart = fulfillableCart;
         this.favourites=favourites;
+        this.balance=balance;
     }
 
     public Main(Main that) {
