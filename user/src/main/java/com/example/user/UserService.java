@@ -82,6 +82,30 @@ public class UserService{
         userInSystem.setPassword(user.getPassword());
     }
 
+    @Transactional
+    public void updateBalance(Long userId,float amount, String change){
+        Optional<User> confirmUser=userRepository.findById(userId);
+        User verifiedUser;
+        if (confirmUser.isPresent()){
+            verifiedUser=confirmUser.get();
+        }
+        else{
+            throw new IllegalStateException("User does not exist");
+        }
+
+        if(change.equals("deduct") && verifiedUser.getBalance()<amount){
+            throw new IllegalStateException("Insufficient funds");
+        }
+        else {
+            if (change.equals("deduct")){
+                verifiedUser.setBalance(verifiedUser.getBalance()-amount);
+            }
+            else{
+                verifiedUser.setBalance(verifiedUser.getBalance()+amount);
+            }
+            userRepository.save(verifiedUser);
+        }
+    }
 
 
 }

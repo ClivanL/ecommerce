@@ -152,4 +152,15 @@ public class UserController {
     public void editUser(@PathVariable("userId") Long userId, @RequestBody User user){
         userService.editUser(userId, user);
     }
+
+    @PutMapping(path="updateBalance/{change}")
+    public ResponseEntity<String> updateBalance(@RequestBody User user, @PathVariable("change")String change){
+        try{
+            userService.updateBalance(user.getId(),user.getBalance(),change);
+            return ResponseEntity.status(HttpStatus.OK).body("User account balance successfully updated");
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

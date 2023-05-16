@@ -68,6 +68,12 @@ public class User {
         this.email = email;
         this.balance=balance;
     }
+
+    public User(Long id, float balance) {
+        this.id = id;
+        this.balance = balance;
+    }
+
     public Long getId() {
         return id;
     }
@@ -107,6 +113,15 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "User{" +

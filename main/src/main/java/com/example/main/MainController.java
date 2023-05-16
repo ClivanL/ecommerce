@@ -225,14 +225,21 @@ public class MainController {
     }
 
     @PostMapping("cart/checkOutCart")
-    public Main checkOutCart(@RequestBody Main main){
-        List<Cart> cartItems=main.getCartItems();
-        mainService.updateMain(cartItems, main.getUserId());
-    //System.out.println("you're here");
-        List<Cart>emptyCart= new ArrayList<>();
-        Main mainCopy= new Main(main);
-        mainCopy.setCartItems(emptyCart);
-        return mainCopy;
+    public ResponseEntity<?> checkOutCart(@RequestBody Main main){
+        try{
+            List<Cart> cartItems=main.getCartItems();
+            mainService.updateMain(cartItems, main.getUserId());
+            //System.out.println("you're here");
+            List<Cart>emptyCart= new ArrayList<>();
+            Main mainCopy= new Main(main);
+            mainCopy.setCartItems(emptyCart);
+            return ResponseEntity.status(HttpStatus.OK).body(mainCopy);
+        }
+        catch(Exception e){
+            Map<String,String> responseMessage=new HashMap<>();
+            responseMessage.put("message",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
+        }
     }
 
     @PostMapping("owner/updateQuantity")

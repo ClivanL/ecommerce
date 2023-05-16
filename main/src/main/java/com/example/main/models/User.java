@@ -44,7 +44,12 @@ public class User implements UserDetails{
         this.password = password;
     }
 
-    public User(Long id,String username,String email,String name) {
+    public User(Long id, float balance) {
+        this.id = id;
+        this.balance = balance;
+    }
+
+    public User(Long id, String username, String email, String name) {
         this.id = id;
         this.username = username;
         this.name = name;
