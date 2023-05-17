@@ -89,10 +89,10 @@ public class UserController {
         return response;
     }
 
-    //added conversion to DTO to mask password, endpoint used for JWT loadUserByUsername
+    //cannot mask password, endpoint used for JWT loadUserByUsername
     @GetMapping(path="username/{username}")
-    public UserDTO getUserFromUsername(@PathVariable("username")String username){
-        return mapStructMapper.userToUserDTO(userRepository.findByUsername(username).get());
+    public User getUserFromUsername(@PathVariable("username")String username){
+        return userRepository.findByUsername(username).get();
     }
 
     @GetMapping(path="{userId}")
@@ -133,11 +133,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user){
         try{
-            System.out.println(user.toString());
             userService.createUser(user);
         }
         catch(IllegalStateException e){
-            System.out.println("caughterror");
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("Account successfully created");

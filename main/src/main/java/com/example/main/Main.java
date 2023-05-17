@@ -121,6 +121,21 @@ public class Main {
     public void setListedItems(List<Item> listedItems) {
         this.listedItems = listedItems;
     }
+
+    @Override
+    public String toString() {
+        return "Main{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", cartItems=" + cartItems +
+                ", listedItems=" + listedItems +
+                ", fulfillableCart=" + fulfillableCart +
+                ", favourites=" + favourites +
+                ", balance=" + balance +
+                '}';
+    }
 }
 
 

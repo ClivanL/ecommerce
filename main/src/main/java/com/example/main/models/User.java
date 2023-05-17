@@ -137,6 +137,7 @@ public class User implements UserDetails{
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", balance=" + balance +
                 ", authorities=" + authorities +
                 '}';
     }

@@ -43,6 +43,7 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         final String uri="http://user-server:8081/api/user/"+userId;
         User verifiedUser = restTemplate.getForObject(uri,User.class);
+        System.out.println(verifiedUser.toString());
         final String uri2 = "http://cart-server:8083/api/cart/"+userId;
         Cart[] response=restTemplate.getForObject(uri2, Cart[].class);
         Cart[] newResponse=new Cart[response.length];
@@ -227,6 +228,7 @@ public class MainController {
     @PostMapping("cart/checkOutCart")
     public ResponseEntity<?> checkOutCart(@RequestBody Main main){
         try{
+            System.out.println(main.toString());
             List<Cart> cartItems=main.getCartItems();
             mainService.updateMain(cartItems, main.getUserId());
             //System.out.println("you're here");

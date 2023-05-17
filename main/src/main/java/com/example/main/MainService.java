@@ -38,6 +38,7 @@ public class MainService{
             //check if user has sufficient balance for cart purchase
             float totalCost;
             totalCost=checkSufficientBalance(cartItems,userId);
+            System.out.println(totalCost);
 
             //update quantity, cart and purchaseLog in respective modules
             for (int i=0;i<cartItems.size();i++){
@@ -68,7 +69,7 @@ public class MainService{
         //tally total cost of cart
         float totalCost=0;
         for (int i=0;i<cartItems.size();i++){
-            uri="http://item-server:8080/api/item/"+cartItems.get(i).getItemId();
+            uri="http://item-server:8080/api/item/"+cartItems.get(i).getItem().getId();
             Double itemPrice=restTemplate.getForObject(uri,Item.class).getPrice();
             totalCost+=itemPrice*cartItems.get(i).getQuantity();
         }
@@ -95,7 +96,8 @@ public class MainService{
 
         //check for price of item
         uri="http://item-server:8080/api/item/"+itemId;
-        Double itemPrice=restTemplate.getForObject(uri,Item.class).getPrice();
+        Item item=restTemplate.getForObject(uri,Item.class);
+        Double itemPrice=item.getPrice();
 
         //delete cart from database
         uri="http://cart-server:8083/api/cart/"+cartId.toString();
@@ -104,7 +106,7 @@ public class MainService{
         //update seller's balance
         float earnings= (float) (itemPrice*quantity);
         uri="http://user-server:8081/api/user/updateBalance/add";
-        ResponseEntity<String> response=restTemplate.exchange(uri,HttpMethod.PUT,new HttpEntity<>(new User(userId,earnings)),String.class);
+        ResponseEntity<String> response=restTemplate.exchange(uri,HttpMethod.PUT,new HttpEntity<>(new User(item.getOwnerId(),earnings)),String.class);
         if (response.getStatusCode()==HttpStatus.BAD_REQUEST){
             throw new IllegalStateException(response.getBody());
         }

@@ -130,6 +130,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", balance=" + balance +
                 '}';
     }
 }
