@@ -2,9 +2,12 @@ package com.example.cart;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/api/cart")
@@ -42,9 +45,15 @@ public class CartController {
         cartService.updateCart(cart);
     }
 
-    @DeleteMapping(path="{cartId}")
-    public void deleteCart(@PathVariable("cartId") Long cartId){
-       cartRepository.deleteById(cartId);
+    @GetMapping(path="delete/{cartId}")
+    public ResponseEntity<String> deleteCart(@PathVariable("cartId") Long cartId){
+       Optional<Cart> confirmCart=cartRepository.findById(cartId);
+       if (confirmCart.isEmpty()){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cart does not exist");
+       }
+       else{
+           return ResponseEntity.status(HttpStatus.OK).body("Cart successfully deleted");
+       }
     }
 
 }

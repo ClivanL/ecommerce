@@ -100,8 +100,11 @@ public class MainService{
         Double itemPrice=item.getPrice();
 
         //delete cart from database
-        uri="http://cart-server:8083/api/cart/"+cartId.toString();
-        restTemplate.delete(uri);
+        uri="http://cart-server:8083/api/cart/delete/"+cartId.toString();
+        ResponseEntity<String>cartDeleteResponse=restTemplate.getForEntity(uri,String.class);
+        if(cartDeleteResponse.getStatusCode()==HttpStatus.BAD_REQUEST){
+            throw new IllegalStateException(cartDeleteResponse.getBody());
+        }
 
         //update seller's balance
         float earnings= (float) (itemPrice*quantity);
