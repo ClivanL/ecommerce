@@ -1,6 +1,7 @@
 package com.example.cart;
 
 
+import com.example.cart.services.commands.CartCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,17 +9,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(path="/api/cart")
 public class CartController {
     private final CartRepository cartRepository;
     private final CartService cartService;
+    private CartCommandService cartCommandService;
 
     @Autowired
-    public CartController (CartRepository cartRepository, CartService cartService){
+    public CartController (CartRepository cartRepository, CartService cartService, CartCommandService cartCommandService){
         this.cartRepository=cartRepository;
         this.cartService=cartService;
+        this.cartCommandService=cartCommandService;
     }
 
     @GetMapping
@@ -54,6 +58,11 @@ public class CartController {
        else{
            return ResponseEntity.status(HttpStatus.OK).body("Cart successfully deleted");
        }
+    }
+
+    @PostMapping(path="checkoutCart")
+    public CompletableFuture<String> checkoutCart(@RequestBody List<Cart> carts){
+        return cartCommandService.checkoutCart(carts);
     }
 
 }

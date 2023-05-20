@@ -12,4 +12,5 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
     @Query("SELECT c FROM Cart c WHERE c.userId=?1 ORDER BY id")
     List<Cart> findAllByUserId(Long userId);
     Optional<Cart> findByUserIdAndItemId(Long userId, Long itemId);
+    void deleteAllByUserId(Long userId);
 }
