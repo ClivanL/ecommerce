@@ -21,15 +21,14 @@ public class CartAggregate {
     private String cartId;
     public List<Cart> carts;
     public CartStatus cartStatus;
-    private final CartRepository cartRepository;
+    private CartRepository cartRepository;
 
-    public CartAggregate(CartRepository cartRepository){
-        this.cartRepository = cartRepository;
+    public CartAggregate(){
+
     }
 
     @CommandHandler
-    public CartAggregate(CheckoutCartCommand checkoutCartCommand, CartRepository cartRepository){
-        this.cartRepository = cartRepository;
+    public CartAggregate(CheckoutCartCommand checkoutCartCommand){
         AggregateLifecycle.apply(new CheckOutCartEvent(checkoutCartCommand.cartId,checkoutCartCommand.carts, checkoutCartCommand.cartStatus));
     }
     @EventSourcingHandler
@@ -40,12 +39,12 @@ public class CartAggregate {
     }
     @CommandHandler
     protected void on(UpdateCartStatusCommand updateCartStatusCommand){
+        Long userId=this.carts.get(0).getUserId();
+        this.cartRepository.deleteAllByUserId(userId);
         AggregateLifecycle.apply(new CartCheckedOutEvent(updateCartStatusCommand.cartId, updateCartStatusCommand.cartStatus));
     }
     @EventSourcingHandler
     protected void on(CartCheckedOutEvent cartCheckedOutEvent){
-        Long userId=carts.get(0).getUserId();
-        cartRepository.deleteAllByUserId(userId);
         this.cartId=cartCheckedOutEvent.cartId;
         this.cartStatus=CartStatus.valueOf(cartCheckedOutEvent.cartStatus);
     }

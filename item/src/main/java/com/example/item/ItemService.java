@@ -39,6 +39,7 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
+    public Item findItemById(Long itemId) {return itemRepository.findById(itemId).get();}
     public List<Item> findItemsByOwnerId(Long ownerId){
         return itemRepository.findByOwnerId(ownerId);
     }
