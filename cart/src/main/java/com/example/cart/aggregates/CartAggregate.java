@@ -5,7 +5,6 @@ import com.example.cart.CartRepository;
 import com.example.cart.commands.CheckoutCartCommand;
 import com.example.cart.commands.UpdateCartStatusCommand;
 import com.example.cart.events.CartCheckedOutEvent;
-import com.example.cart.events.CartUpdatedEvent;
 import com.example.cart.events.CheckOutCartEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -21,7 +20,7 @@ public class CartAggregate {
     @AggregateIdentifier
     private String cartId;
     public List<Cart> carts;
-    public String cartStatus;
+    public CartStatus cartStatus;
     private final CartRepository cartRepository;
 
     public CartAggregate(CartRepository cartRepository){
@@ -44,11 +43,11 @@ public class CartAggregate {
         AggregateLifecycle.apply(new CartCheckedOutEvent(updateCartStatusCommand.cartId, updateCartStatusCommand.cartStatus));
     }
     @EventSourcingHandler
-    protected void on(CartUpdatedEvent cartUpdatedEvent){
+    protected void on(CartCheckedOutEvent cartCheckedOutEvent){
         Long userId=carts.get(0).getUserId();
         cartRepository.deleteAllByUserId(userId);
-        this.cartId=cartUpdatedEvent.cartId;
-        this.cartStatus=cartUpdatedEvent.cartStatus;
+        this.cartId=cartCheckedOutEvent.cartId;
+        this.cartStatus=CartStatus.valueOf(cartCheckedOutEvent.cartStatus);
     }
 
 }

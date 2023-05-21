@@ -90,6 +90,26 @@ public class ItemService {
         }
     }
 
+    //for axon: Deduct quantity
+    @Transactional
+    public void updateItemQuantityAxon(Long itemId, int quantity){
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+
+        if (presentItem.getQuantity()>=quantity) {
+            presentItem.setQuantity(presentItem.getQuantity() - quantity);
+        }
+        else{
+            throw new IllegalStateException("insufficient quantity");
+        }
+    }
+
     @Transactional
     public void ownerUpdateItemQuantity(Long itemId, Item item){
         Optional <Item> itemData= itemRepository.findById(itemId);

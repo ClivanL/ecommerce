@@ -31,13 +31,12 @@ public class CartManagementSaga {
         SagaLifecycle.associateWith("deductionId", deductionId);
         System.out.println("order id" + checkOutCartEvent.cartId);
 
-        commandGateway.send(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId));
+        commandGateway.send(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId,checkOutCartEvent.carts));
     }
 
     @SagaEventHandler(associationProperty = "deductionId")
     public void handle(QuantityDeductedEvent quantityDeductedEvent){
         String paymentId = UUID.randomUUID().toString();
-
         System.out.println("Saga continued");
 
         //associate Saga with shipping

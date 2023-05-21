@@ -1,6 +1,6 @@
-package com.example.cart.commands;
+package com.example.item.commands;
 
-import com.example.cart.Cart;
+import com.example.item.models.Cart;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.List;

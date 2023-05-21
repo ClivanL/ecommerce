@@ -25,7 +25,7 @@ public class CartCommandService {
     }
 
     public CompletableFuture<String> checkoutCart(List<Cart> carts){
-        return commandGateway.send(new CheckoutCartCommand(UUID.randomUUID().toString(),carts,String.valueOf(CartStatus.CHECKOUT)));
+        return commandGateway.send(new CheckoutCartCommand(UUID.randomUUID().toString(),carts,CartStatus.CHECKOUT));
     }
 
 }
