@@ -27,7 +27,7 @@ public class CartManagementSaga {
 
     @StartSaga
     @SagaEventHandler(associationProperty = "cartId")
-    public void handle(CheckOutCartEvent checkOutCartEvent, DeadlineManager deadlineManager){
+    public void handle(CheckOutCartEvent checkOutCartEvent){
         String deductionId= UUID.randomUUID().toString();
         System.out.println("Saga invoked");
 
