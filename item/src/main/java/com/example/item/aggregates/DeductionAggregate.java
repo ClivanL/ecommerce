@@ -2,7 +2,8 @@ package com.example.item.aggregates;
 
 import com.example.item.Item;
 import com.example.item.ItemService;
-import com.example.item.commands.DeductQuantityCommand;
+//import com.example.item.commands.DeductQuantityCommand;
+import com.example.coreapi.DeductQuantityCommand;
 import com.example.item.events.QuantityDeductedEvent;
 import com.example.item.models.Cart;
 import org.axonframework.commandhandling.CommandHandler;
@@ -32,14 +33,15 @@ public class DeductionAggregate {
 
     @CommandHandler
     public DeductionAggregate(DeductQuantityCommand deductQuantityCommand){
+        System.out.println("deduct command passed");
         try{
             List<Item>items=new ArrayList<>();
-            List<Cart>carts=deductQuantityCommand.carts;
-            for (int i=0; i<carts.size();i++){
-                this.itemService.updateItemQuantityAxon(carts.get(i).getItemId(),carts.get(i).getQuantity());
-                items.add(itemService.findItemById(carts.get(i).getItemId()));
-            }
-            AggregateLifecycle.apply(new QuantityDeductedEvent(deductQuantityCommand.deductionId, deductQuantityCommand.cartId,carts,items));
+//            List<Cart>carts=deductQuantityCommand.carts;
+//            for (int i=0; i<carts.size();i++){
+//                this.itemService.updateItemQuantityAxon(carts.get(i).getItemId(),carts.get(i).getQuantity());
+//                items.add(itemService.findItemById(carts.get(i).getItemId()));
+//            }
+//            AggregateLifecycle.apply(new QuantityDeductedEvent(deductQuantityCommand.deductionId, deductQuantityCommand.cartId,carts,items));
         }
         catch(Exception e){
             this.deductionId=deductQuantityCommand.deductionId;

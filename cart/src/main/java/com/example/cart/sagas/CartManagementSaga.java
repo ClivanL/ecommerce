@@ -1,19 +1,24 @@
 package com.example.cart.sagas;
 
 import com.example.cart.aggregates.CartStatus;
-import com.example.cart.commands.DeductQuantityCommand;
+//import com.example.cart.commands.DeductQuantityCommand;
+import com.example.coreapi.DeductQuantityCommand;
 import com.example.cart.commands.PaymentCommand;
 import com.example.cart.commands.UpdateCartStatusCommand;
 import com.example.cart.events.CartCheckedOutEvent;
 import com.example.cart.events.CheckOutCartEvent;
 import com.example.cart.events.PaymentCompletedEvent;
 import com.example.cart.events.QuantityDeductedEvent;
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.GenericCommandMessage;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.modelling.saga.SagaEventHandler;
 import org.axonframework.modelling.saga.SagaLifecycle;
 import org.axonframework.modelling.saga.StartSaga;
 import org.axonframework.spring.stereotype.Saga;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.inject.Inject;
 import java.time.Duration;
 import java.util.UUID;
@@ -23,6 +28,7 @@ public class CartManagementSaga {
 
     @Inject
     private transient CommandGateway commandGateway;
+
 
 
     @StartSaga
@@ -35,7 +41,8 @@ public class CartManagementSaga {
         SagaLifecycle.associateWith("deductionId", deductionId);
         System.out.println("cart id" + checkOutCartEvent.cartId);
 
-        commandGateway.send(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId,checkOutCartEvent.carts));
+        //commandGateway.sendAndWait(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId,checkOutCartEvent.carts));
+        commandGateway.sendAndWait(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId));
     }
 
     @SagaEventHandler(associationProperty = "deductionId")
