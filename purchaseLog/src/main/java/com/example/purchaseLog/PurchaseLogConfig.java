@@ -1,6 +1,6 @@
 package com.example.purchaseLog;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,5 +17,12 @@ public class PurchaseLogConfig {
             PurchaseLog purchaselog= new PurchaseLog(1L,1L);
             purchaseLogRepository.saveAll(List.of(purchaselog));
         };
+    }
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+
+        return xStream;
     }
 }

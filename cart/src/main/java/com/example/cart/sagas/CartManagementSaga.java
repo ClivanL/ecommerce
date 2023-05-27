@@ -1,11 +1,13 @@
 package com.example.cart.sagas;
 
 import com.example.cart.aggregates.CartStatus;
+import com.example.coreapi.commands.CreateInvoiceCommand;
 import com.example.coreapi.commands.DeductQuantityCommand;
 import com.example.coreapi.commands.PaymentCommand;
 import com.example.cart.commands.UpdateCartStatusCommand;
 import com.example.cart.events.CartCheckedOutEvent;
 import com.example.cart.events.CheckOutCartEvent;
+import com.example.coreapi.events.InvoiceCreatedEvent;
 import com.example.coreapi.events.PaymentCompletedEvent;
 import com.example.coreapi.events.QuantityDeductedEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -59,10 +61,24 @@ public class CartManagementSaga {
         commandGateway.send(new PaymentCommand(paymentId, quantityDeductedEvent.cartId, quantityDeductedEvent.deductionId, quantityDeductedEvent.carts, quantityDeductedEvent.items));
     }
 
-    @SagaEventHandler(associationProperty = "cartId")
+//    @SagaEventHandler(associationProperty = "cartId")
+//    public void handle(PaymentCompletedEvent paymentCompletedEvent){
+//        commandGateway.send(new UpdateCartStatusCommand(paymentCompletedEvent.cartId, String.valueOf(CartStatus.PAID)));
+//    }
+
+    //below added for purchaseLog
+    @SagaEventHandler(associationProperty = "paymentId")
     public void handle(PaymentCompletedEvent paymentCompletedEvent){
-        commandGateway.send(new UpdateCartStatusCommand(paymentCompletedEvent.cartId, String.valueOf(CartStatus.PAID)));
+        String invoiceId=UUID.randomUUID().toString();
+        SagaLifecycle.associateWith("invoiceId", invoiceId);
+        commandGateway.send(new CreateInvoiceCommand(invoiceId,paymentCompletedEvent.paymentId, paymentCompletedEvent.deductionId, paymentCompletedEvent.cartId, paymentCompletedEvent.carts, paymentCompletedEvent.items));
     }
+
+    @SagaEventHandler(associationProperty= "cartId")
+    public void handle(InvoiceCreatedEvent invoiceCreatedEvent){
+        commandGateway.send(new UpdateCartStatusCommand(invoiceCreatedEvent.cartId, String.valueOf(CartStatus.PAID)));
+    }
+    //above added for purchaseLog
 
     @SagaEventHandler(associationProperty = "cartId")
     public void handle(CartCheckedOutEvent cartCheckedOutEvent){

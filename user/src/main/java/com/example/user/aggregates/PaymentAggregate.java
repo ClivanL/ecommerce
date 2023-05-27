@@ -66,7 +66,7 @@ public class PaymentAggregate {
                 this.userService.updateBalance(userIdToAdd,balanceToAdd,"add");
             }
             this.userService.updateBalance(userIdToDeduct,amountToDeduct,"deduct");
-            AggregateLifecycle.apply(new PaymentCompletedEvent(paymentCommand.paymentId, paymentCommand.cartId, paymentCommand.deductionId));
+            AggregateLifecycle.apply(new PaymentCompletedEvent(paymentCommand.paymentId, paymentCommand.cartId, paymentCommand.deductionId,carts,items));
         }
         catch(Exception e){
             System.out.println("Exception caught");
