@@ -1,5 +1,7 @@
 package com.example.user;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,13 @@ public class UserConfig {
             User user2=new User("user2","$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6","tomatoseed","tomato.seed@seed.com",100);
             userRepository.saveAll(List.of(user1,user2));
         };
+    }
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+
+        return xStream;
     }
 
 }

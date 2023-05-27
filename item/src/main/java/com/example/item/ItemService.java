@@ -94,6 +94,7 @@ public class ItemService {
     //for axon: Deduct quantity
     @Transactional
     public void updateItemQuantityAxon(Long itemId, int quantity){
+        System.out.println("axon update quantity");
         Optional <Item> itemData= itemRepository.findById(itemId);
         Item presentItem;
         if (itemData.isPresent()){

@@ -1,7 +1,7 @@
-package com.example.user.commands;
+package com.example.coreapi.commands;
 
-import com.example.user.models.Cart;
-import com.example.user.models.Item;
+import com.example.coreapi.models.ACart;
+import com.example.coreapi.models.AItem;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.List;
@@ -11,10 +11,10 @@ public class PaymentCommand {
     public final String paymentId;
     public final String deductionId;
     public final String cartId;
-    public final List<Cart> carts;
-    public final List<Item> items;
+    public final List<ACart> carts;
+    public final List<AItem> items;
 
-    public PaymentCommand(String paymentId, String cartId, String deductionId, List<Cart> carts, List<Item> items){
+    public PaymentCommand(String paymentId, String cartId, String deductionId, List<ACart> carts, List<AItem> items){
         this.paymentId=paymentId;
         this.deductionId=deductionId;
         this.cartId=cartId;

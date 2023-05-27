@@ -1,5 +1,7 @@
 package com.example.cart;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,5 +19,12 @@ public class CartConfig {
             Cart cart4 = new Cart(1L,3L,36);
             cartRepository.saveAll(List.of(cart1,cart2,cart3,cart4));
         };
+    }
+    @Bean
+    public XStream xStream() {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+
+        return xStream;
     }
 }

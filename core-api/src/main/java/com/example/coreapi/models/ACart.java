@@ -1,9 +1,9 @@
-package com.example.coreapi;
+package com.example.coreapi.models;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Cart {
+public class ACart {
 
     @JsonProperty("id")
     private Long id;
@@ -15,20 +15,20 @@ public class Cart {
     private int quantity;
 
 
-    public Cart(Long id, Long userId, Long itemId, int quantity) {
+    public ACart(Long id, Long userId, Long itemId, int quantity) {
         this.id = id;
         this.userId = userId;
         this.itemId = itemId;
         this.quantity=quantity;
     }
 
-    public Cart(Long userId, Long itemId, int quantity) {
+    public ACart(Long userId, Long itemId, int quantity) {
         this.userId = userId;
         this.itemId = itemId;
         this.quantity=quantity;
     }
 
-    public Cart() {
+    public ACart() {
     }
 
     public Long getId() {
@@ -66,7 +66,7 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
+        return "ACart{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", itemId=" + itemId +

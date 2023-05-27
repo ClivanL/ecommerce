@@ -16,6 +16,7 @@
         <module>favourite</module>
         <module>cart</module>
         <module>core-api</module>
+        <module>user</module>
     </modules>
 
 </project>

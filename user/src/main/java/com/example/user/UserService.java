@@ -84,6 +84,7 @@ public class UserService{
 
     @Transactional
     public void updateBalance(Long userId,float amount, String change){
+        System.out.println("updating balance");
         Optional<User> confirmUser=userRepository.findById(userId);
         User verifiedUser;
         if (confirmUser.isPresent()){
