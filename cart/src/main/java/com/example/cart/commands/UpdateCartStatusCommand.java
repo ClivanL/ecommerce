@@ -1,9 +1,7 @@
 package com.example.cart.commands;
 
-import com.example.cart.Cart;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.util.List;
 
 public class UpdateCartStatusCommand {
     @TargetAggregateIdentifier

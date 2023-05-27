@@ -2,9 +2,7 @@ package com.example.item.aggregates;
 
 import com.example.item.Item;
 import com.example.item.ItemService;
-//import com.example.item.commands.DeductQuantityCommand;
 import com.example.coreapi.commands.DeductQuantityCommand;
-//import com.example.item.events.QuantityDeductedEvent;
 import com.example.coreapi.events.QuantityDeductedEvent;
 import com.example.coreapi.models.AItem;
 import com.example.item.models.Cart;

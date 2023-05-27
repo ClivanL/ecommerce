@@ -1,16 +1,12 @@
 package com.example.cart.sagas;
 
 import com.example.cart.aggregates.CartStatus;
-//import com.example.cart.commands.DeductQuantityCommand;
 import com.example.coreapi.commands.DeductQuantityCommand;
-//import com.example.cart.commands.PaymentCommand;
 import com.example.coreapi.commands.PaymentCommand;
 import com.example.cart.commands.UpdateCartStatusCommand;
 import com.example.cart.events.CartCheckedOutEvent;
 import com.example.cart.events.CheckOutCartEvent;
-//import com.example.cart.events.PaymentCompletedEvent;
 import com.example.coreapi.events.PaymentCompletedEvent;
-//import com.example.cart.events.QuantityDeductedEvent;
 import com.example.coreapi.events.QuantityDeductedEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.SagaEventHandler;
@@ -48,7 +44,6 @@ public class CartManagementSaga {
         }
 
         commandGateway.sendAndWait(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId,carts));
-        //commandGateway.sendAndWait(new DeductQuantityCommand(deductionId, checkOutCartEvent.cartId));
     }
 
     @SagaEventHandler(associationProperty = "deductionId")
