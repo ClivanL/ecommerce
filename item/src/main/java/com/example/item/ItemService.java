@@ -39,6 +39,7 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
+    public Item findItemById(Long itemId) {return itemRepository.findById(itemId).get();}
     public List<Item> findItemsByOwnerId(Long ownerId){
         return itemRepository.findByOwnerId(ownerId);
     }
@@ -84,6 +85,27 @@ public class ItemService {
 
         if (presentItem.getQuantity()>=item.getQuantity()) {
             presentItem.setQuantity(presentItem.getQuantity() - item.getQuantity());
+        }
+        else{
+            throw new IllegalStateException("insufficient quantity");
+        }
+    }
+
+    //for axon: Deduct quantity
+    @Transactional
+    public void updateItemQuantityAxon(Long itemId, int quantity){
+        System.out.println("axon update quantity");
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+
+        if (presentItem.getQuantity()>=quantity) {
+            presentItem.setQuantity(presentItem.getQuantity() - quantity);
         }
         else{
             throw new IllegalStateException("insufficient quantity");

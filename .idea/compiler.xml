@@ -6,6 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="core-api" />
+        <module name="main" />
+        <module name="favourite" />
+        <module name="cart" />
       </profile>
       <profile name="Annotation profile for ecommerce" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -15,13 +19,22 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
-        <module name="ecommerce" />
+        <module name="purchaseLog" />
+        <module name="user" />
+        <module name="item" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ecommerce" options="-parameters" />
+      <module name="cart" options="-parameters" />
+      <module name="core-api" options="-parameters" />
+      <module name="ecommerce" options="" />
+      <module name="favourite" options="-parameters" />
+      <module name="item" options="-parameters" />
+      <module name="main" options="-parameters" />
+      <module name="purchaseLog" options="-parameters" />
+      <module name="user" options="-parameters" />
     </option>
   </component>
 </project>

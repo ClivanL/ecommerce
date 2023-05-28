@@ -9,6 +9,7 @@ services:
             - 16666:8080
         networks:
             - spring-cloud-network
+            - axon-demo
     user-server:
         container_name: user-server
         build:
@@ -19,6 +20,7 @@ services:
             - 19999:8081
         networks:
             - spring-cloud-network
+            - axon-demo
     purchaseLog-server:
         container_name: purchaseLog-server
         build:
@@ -29,6 +31,7 @@ services:
             - 17777:8082
         networks:
             - spring-cloud-network
+            - axon-demo
     cart-server:
         container_name: cart-server
         build:
@@ -42,6 +45,7 @@ services:
             - 18888:8083
         networks:
             - spring-cloud-network
+            - axon-demo
     main-server:
         container_name: main-server
         build:
@@ -62,6 +66,25 @@ services:
             - 14444:8085
         networks:
             - spring-cloud-network
+    axonserver:
+        image: axoniq/axonserver
+        hostname: axonserver
+        volumes:
+            - axonserver-data:/data
+            - axonserver-events:/eventdata
+            - axonserver-config:/config:ro
+        ports:
+            - '8024:8024'
+            - '8124:8124'
+            - '8224:8224'
+        networks:
+            - axon-demo
+volumes:
+        axonserver-data:
+        axonserver-events:
+        axonserver-config:
 networks:
     spring-cloud-network:
+        driver: bridge
+    axon-demo:
         driver: bridge
