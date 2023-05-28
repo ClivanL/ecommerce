@@ -52,11 +52,11 @@ public class MainController {
             String uriForItem="http://item-server:8080/api/item/"+response[i].getItemId();
             Item itemResponse=restTemplate.getForObject(uriForItem,Item.class);
             if (response[i].getQuantity()> itemResponse.getQuantity()){
-                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse,false);
+                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse,false,response[i].getItemId(),response[i].getUserId());
                 fulfillableCart=false;
             }
             else{
-                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse);
+                newResponse[i]=new Cart(response[i].getId(),response[i].getQuantity(),itemResponse,response[i].getItemId(),response[i].getUserId());
             }
 
         }
@@ -242,6 +242,12 @@ public class MainController {
             responseMessage.put("message",e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
         }
+    }
+    @PostMapping("axon/cart/checkOutCart")
+    public void checkOutCartAxon(@RequestBody Main main){
+        RestTemplate restTemplate= new RestTemplate();
+        String uri="http://cart-server:8083/api/cart/checkoutCart";
+        restTemplate.postForObject(uri,main.getCartItems(),String.class);
     }
 
     @PostMapping("owner/updateQuantity")

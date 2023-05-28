@@ -43,17 +43,21 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Cart(Long id, int quantity, Item item) {
+    public Cart(Long id, int quantity, Item item, Long itemId, Long userId) {
         this.id = id;
         this.quantity = quantity;
         this.item = item;
+        this.itemId=itemId;
+        this.userId=userId;
     }
 
-    public Cart(Long id, int quantity, Item item, Boolean sufficient) {
+    public Cart(Long id, int quantity, Item item, Boolean sufficient, Long itemId, Long userId) {
         this.id = id;
         this.quantity = quantity;
         this.item = item;
         this.sufficient = sufficient;
+        this.itemId=itemId;
+        this.userId=userId;
     }
 
     public Long getId() {
