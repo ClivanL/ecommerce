@@ -36,10 +36,11 @@ public class InvoiceAggregate {
             for (int i=0;i<createInvoiceCommand.items.size();i++){
                 ownerMap.put(createInvoiceCommand.items.get(i).getId(),createInvoiceCommand.items.get(i).getOwnerId());
             }
+            Long userId=createInvoiceCommand.carts.get(0).getUserId();
             for (int i=0;i<createInvoiceCommand.carts.size();i++){
-                this.purchaseLogService.addPurchaseLog(new PurchaseLog(createInvoiceCommand.carts.get(i).getItemId(),createInvoiceCommand.carts.get(i).getUserId(),createInvoiceCommand.carts.get(i).getQuantity(),ownerMap.get(createInvoiceCommand.carts.get(i).getItemId())));
+                this.purchaseLogService.addPurchaseLog(new PurchaseLog(createInvoiceCommand.carts.get(i).getItemId(),userId,createInvoiceCommand.carts.get(i).getQuantity(),ownerMap.get(createInvoiceCommand.carts.get(i).getItemId())));
             }
-            AggregateLifecycle.apply(new InvoiceCreatedEvent(createInvoiceCommand.invoiceId,createInvoiceCommand.paymentId, createInvoiceCommand.deductionId, createInvoiceCommand.cartId));
+            AggregateLifecycle.apply(new InvoiceCreatedEvent(createInvoiceCommand.invoiceId,createInvoiceCommand.paymentId, createInvoiceCommand.deductionId, createInvoiceCommand.cartId, userId));
         }
         catch (Exception e){
             this.invoiceId=createInvoiceCommand.invoiceId;

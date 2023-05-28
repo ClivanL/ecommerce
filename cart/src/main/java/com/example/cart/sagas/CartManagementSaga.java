@@ -58,27 +58,20 @@ public class CartManagementSaga {
         SagaLifecycle.associateWith("paymentId", paymentId);
 
         //send the create payment command
-        commandGateway.send(new PaymentCommand(paymentId, quantityDeductedEvent.cartId, quantityDeductedEvent.deductionId, quantityDeductedEvent.carts, quantityDeductedEvent.items));
+        commandGateway.sendAndWait(new PaymentCommand(paymentId, quantityDeductedEvent.cartId, quantityDeductedEvent.deductionId, quantityDeductedEvent.carts, quantityDeductedEvent.items));
     }
 
-//    @SagaEventHandler(associationProperty = "cartId")
-//    public void handle(PaymentCompletedEvent paymentCompletedEvent){
-//        commandGateway.send(new UpdateCartStatusCommand(paymentCompletedEvent.cartId, String.valueOf(CartStatus.PAID)));
-//    }
-
-    //below added for purchaseLog
     @SagaEventHandler(associationProperty = "paymentId")
     public void handle(PaymentCompletedEvent paymentCompletedEvent){
         String invoiceId=UUID.randomUUID().toString();
         SagaLifecycle.associateWith("invoiceId", invoiceId);
-        commandGateway.send(new CreateInvoiceCommand(invoiceId,paymentCompletedEvent.paymentId, paymentCompletedEvent.deductionId, paymentCompletedEvent.cartId, paymentCompletedEvent.carts, paymentCompletedEvent.items));
+        commandGateway.sendAndWait(new CreateInvoiceCommand(invoiceId,paymentCompletedEvent.paymentId, paymentCompletedEvent.deductionId, paymentCompletedEvent.cartId, paymentCompletedEvent.carts, paymentCompletedEvent.items));
     }
 
     @SagaEventHandler(associationProperty= "cartId")
     public void handle(InvoiceCreatedEvent invoiceCreatedEvent){
-        commandGateway.send(new UpdateCartStatusCommand(invoiceCreatedEvent.cartId, String.valueOf(CartStatus.PAID)));
+        commandGateway.sendAndWait(new UpdateCartStatusCommand(invoiceCreatedEvent.cartId, String.valueOf(CartStatus.PAID),invoiceCreatedEvent.userId));
     }
-    //above added for purchaseLog
 
     @SagaEventHandler(associationProperty = "cartId")
     public void handle(CartCheckedOutEvent cartCheckedOutEvent){
