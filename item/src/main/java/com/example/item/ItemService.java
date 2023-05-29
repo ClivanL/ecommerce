@@ -113,6 +113,20 @@ public class ItemService {
     }
 
     @Transactional
+    public void addQuantityAxon(Long itemId, int quantity){
+        Optional <Item> itemData= itemRepository.findById(itemId);
+        Item presentItem;
+        if (itemData.isPresent()){
+            presentItem=itemData.get();
+        }
+        else {
+            throw new IllegalStateException("item does not exist");
+        }
+        presentItem.setQuantity(presentItem.getQuantity()+quantity);
+        itemRepository.save(presentItem);
+    }
+
+    @Transactional
     public void ownerUpdateItemQuantity(Long itemId, Item item){
         Optional <Item> itemData= itemRepository.findById(itemId);
         Item presentItem;

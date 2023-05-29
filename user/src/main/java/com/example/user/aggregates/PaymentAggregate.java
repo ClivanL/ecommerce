@@ -1,5 +1,6 @@
 package com.example.user.aggregates;
 
+import com.example.coreapi.events.PaymentFailedEvent;
 import com.example.user.UserService;
 //import com.example.user.commands.PaymentCommand;
 import com.example.coreapi.commands.PaymentCommand;
@@ -35,9 +36,9 @@ public class PaymentAggregate {
     public PaymentAggregate(PaymentCommand paymentCommand,UserService userService){
         System.out.println("handling payment command");
         this.userService=userService;
+        List<ACart>carts=paymentCommand.carts;
+        List<AItem>items=paymentCommand.items;
         try{
-            List<ACart>carts=paymentCommand.carts;
-            List<AItem>items=paymentCommand.items;
             Map<String,AItem> itemsMap= new HashMap<>();
             for (int i=0;i<items.size();i++){
                 itemsMap.put(items.get(i).getId().toString(),items.get(i));
@@ -51,6 +52,7 @@ public class PaymentAggregate {
                 Double price=itemsMap.get(itemId.toString()).getPrice();
                 amountToDeduct+=price*quantityP;
             }
+            this.userService.updateBalance(userIdToDeduct,amountToDeduct,"deduct");
             Map<String,ACart> cartsMap= new HashMap<>();
             for (int i=0;i<carts.size();i++){
                 cartsMap.put(carts.get(i).getItemId().toString(),carts.get(i));
@@ -65,7 +67,6 @@ public class PaymentAggregate {
                 System.out.println("before update balance");
                 this.userService.updateBalance(userIdToAdd,balanceToAdd,"add");
             }
-            this.userService.updateBalance(userIdToDeduct,amountToDeduct,"deduct");
             AggregateLifecycle.apply(new PaymentCompletedEvent(paymentCommand.paymentId, paymentCommand.cartId, paymentCommand.deductionId,carts,items));
         }
         catch(Exception e){
@@ -74,6 +75,7 @@ public class PaymentAggregate {
             this.deductionId = paymentCommand.deductionId;
             this.cartId=paymentCommand.cartId;
             this.paymentStatus=PaymentStatus.UNSUCCESSFUL;
+            //AggregateLifecycle.apply(new PaymentFailedEvent(paymentCommand.paymentId, paymentCommand.cartId,carts));
         }
 
     }
@@ -84,5 +86,12 @@ public class PaymentAggregate {
         this.cartId=paymentCompletedEvent.cartId;
         this.paymentStatus=PaymentStatus.SUCCESSFUL;
     }
+
+//    @EventSourcingHandler
+//    protected void on(PaymentFailedEvent paymentFailedEvent){
+//        this.paymentId = paymentFailedEvent.paymentId;
+//        this.cartId=paymentFailedEvent.cartId;
+//        this.paymentStatus=PaymentStatus.UNSUCCESSFUL;
+//    }
 
 }
