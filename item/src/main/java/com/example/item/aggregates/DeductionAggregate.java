@@ -15,7 +15,9 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.CreationPolicy;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.transaction.annotation.Propagation;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class DeductionAggregate {
         this.itemService = itemService;
         System.out.println("deduct command passed");
         System.out.println(deductQuantityCommand.carts.get(0).toString());
-        try{
+//        try{
             try{
                 List<AItem>items=new ArrayList<>();
                 List<Cart>carts=new ArrayList<>();
@@ -63,10 +65,10 @@ public class DeductionAggregate {
                 this.deductionStatus=DeductionStatus.Failed;
 
             }
-        }
-        catch(CommandExecutionException e){
-            AggregateLifecycle.apply(new DeductionFailedEvent(deductQuantityCommand.deductionId, deductQuantityCommand.cartId));
-        }
+//        }
+//        catch(CommandExecutionException e){
+//            AggregateLifecycle.apply(new DeductionFailedEvent(deductQuantityCommand.deductionId, deductQuantityCommand.cartId));
+//        }
 
     }
 

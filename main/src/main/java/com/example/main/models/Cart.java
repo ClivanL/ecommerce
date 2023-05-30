@@ -42,6 +42,12 @@ public class Cart {
         this.itemId = itemId;
         this.quantity = quantity;
     }
+    public Cart(Long userId, Long itemId, int quantity, Long id) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.quantity = quantity;
+        this.id=id;
+    }
 
     public Cart(Long id, int quantity, Item item, Long itemId, Long userId) {
         this.id = id;

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path="/api/main")
@@ -244,10 +245,27 @@ public class MainController {
         }
     }
     @PostMapping("axon/cart/checkOutCart")
-    public void checkOutCartAxon(@RequestBody Main main){
+    public ResponseEntity<Map<String,String>> checkOutCartAxon(@RequestBody Main main){
         RestTemplate restTemplate= new RestTemplate();
         String uri="http://cart-server:8083/api/cart/checkoutCart";
         restTemplate.postForObject(uri,main.getCartItems(),String.class);
+        try{
+            TimeUnit.SECONDS.sleep(3);
+        }
+        catch(InterruptedException ie){
+            Thread.currentThread().interrupt();
+        }
+        Map<String,String>responseBody=new HashMap<>();
+        uri="http://cart-server:8083/api/cart/"+main.getUserId();
+        Cart[] response=restTemplate.getForObject(uri,Cart[].class);
+        if (response.length==0){
+            responseBody.put("message","Checkout successful!");
+            return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+        }
+        else{
+            responseBody.put("message","Checkout failed.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+        }
     }
 
     @PostMapping("owner/updateQuantity")
