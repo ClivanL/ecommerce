@@ -43,10 +43,20 @@ public class CartController {
         cartService.addCartItem(cart);
         return cart;
     }
+    @PostMapping(path="updateCart")
+    public ResponseEntity<String> updateCart(@RequestBody List<Cart> carts) {
+        try {
+            cartService.updateCart(carts);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cart update unsuccessful!");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Cart successfully updated!");
+    }
 
     @PutMapping
     public void editCart(@RequestBody Cart cart){
-        cartService.updateCart(cart);
+        cartService.editCart(cart);
     }
 
     @GetMapping(path="delete/{cartId}")

@@ -244,6 +244,33 @@ public class MainController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
         }
     }
+    @PostMapping("cart/updateCart")
+    public ResponseEntity<Map<String,String>> updateCart(@RequestBody Main main){
+        RestTemplateBuilder restTemplateBuilder=new RestTemplateBuilder();
+        RestTemplate restTemplate=restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+        List<Cart> cartItems=main.getCartItems();
+        HttpStatus httpStatus;
+        Map<String,String> responseMessage=new HashMap<>();
+        try{
+        for (int i=0;i<cartItems.size();i++){
+            if (cartItems.get(i).getUserId()!=main.getUserId()){
+                throw new IllegalStateException("Invalid cart!");
+            }
+        }
+            String uri="http://cart-server:8083/api/cart/updateCart";
+            ResponseEntity<String> response=restTemplate.postForEntity(uri,new HttpEntity<>(cartItems),String.class);
+            if (response.getStatusCode()==HttpStatus.BAD_REQUEST){
+                throw new IllegalStateException(response.getBody());
+            }
+            httpStatus=HttpStatus.OK;
+            responseMessage.put("message",response.getBody());
+        }
+        catch(Exception e){
+            httpStatus=HttpStatus.BAD_REQUEST;
+            responseMessage.put("message", e.getMessage());
+        }
+        return ResponseEntity.status(httpStatus).body(responseMessage);
+    }
     @PostMapping("axon/cart/checkOutCart")
     public ResponseEntity<Map<String,String>> checkOutCartAxon(@RequestBody Main main){
         RestTemplate restTemplate= new RestTemplate();

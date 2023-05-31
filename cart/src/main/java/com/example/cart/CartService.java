@@ -40,7 +40,7 @@ public class CartService {
     }
 
     @Transactional
-    public void updateCart(Cart cart){
+    public void editCart(Cart cart){
         Optional<Cart> cartUpdate=cartRepository.findByUserIdAndItemId(cart.getUserId(),cart.getItemId());
         if (cartUpdate.isPresent()) {
             cartUpdate.get().setQuantity(cart.getQuantity());
@@ -48,5 +48,11 @@ public class CartService {
         else{
             throw new IllegalStateException("Item does not exist in cart");
         }
+    }
+    @Transactional
+    public void updateCart(List<Cart> carts){
+        Long userId=carts.get(0).getUserId();
+        cartRepository.deleteAllByUserId(userId);
+        cartRepository.saveAll(carts);
     }
 }
