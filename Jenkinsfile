@@ -26,12 +26,6 @@ pipeline {
                 dir('user'){
                   sh 'mvn clean install -DskipTests=true' 
                }
-                  sh 'Docker-compose up --build'
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
